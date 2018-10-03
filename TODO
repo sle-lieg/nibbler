@@ -1,0 +1,10 @@
+NIBBLER
+
+Libraries:
+	Qt
+	SFML
+	OpenGL ( GLFW ? )
+
+Set-up:
+	☐ Write a script to download and install graphic libs
+	☐ Write the makefile that compiile the exec and dylibs
