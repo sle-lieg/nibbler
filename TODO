@@ -5,6 +5,19 @@ Libraries:
 	SFML
 	OpenGL ( GLFW ? )
 
+Guidelines:
+	☐ 
+
+Classes:
+	Game:
+		☐ Board (width, height)
+		☐ Snake (made of bodyPart, head position)
+		☐ BodyPart (width, height, color)
+		☐ Score
+
+	Interface Game->GraphicLibs:
+		☐ 
+
 Set-up:
 	☐ Write a script to download and install graphic libs
 	☐ Write the makefile that compiile the exec and dylibs

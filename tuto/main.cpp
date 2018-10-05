@@ -16,7 +16,7 @@ int main(int ac, char **av)
 		dlerror_wrapper();
 	if (!(square_ptr = (int (*)(int))dlsym(dl_handle, "square")))
 		dlerror_wrapper();
-	std::cout << "3 * 3 = " << square_ptr(3) << std::endl;
+	std::cout << "@executable_path 3 * 3 = " << square_ptr(3) << std::endl;
 
 	dlclose(dl_handle);
 }

@@ -1,9 +1,10 @@
 #ifndef PAYER_HPP
 # define PAYER_HPP
 
-#include "IEntity.hpp"
+// #include "IEntity.hpp"
+#include <iostream>
 
-class Player: public IEntity
+class Player
 {
 private:
 	Player(void);
@@ -14,11 +15,14 @@ public:
 	Player(std::string name);
 	~Player();
 
-	std::string	getName(void) const;
-	int			getScore(void) const;
-	void		markPoint(void);
-	void		announces(void) const;
+	virtual std::string	getName(void) const;
+	virtual int			getScore(void) const;
+	virtual void		markPoint(void);
+	virtual void		announces(void) const;
 };
+
+typedef Player*	creator(const std::string&);
+typedef void	deleter(Player*);
 
 extern "C" {
 	Player*	createPlayer(const std::string& name);

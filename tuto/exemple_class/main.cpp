@@ -14,20 +14,20 @@ int main(int ac, char **av)
 	if (!(dl_handle = dlopen(av[1], RTLD_LAZY | RTLD_LOCAL)))
 		dlerror_wrapper();
 
-	Player*	(*playerCreator)(const std::string&);
+	creator *playerCreator;
 
-	playerCreator = (Player*(*)(const std::string&)) dlsym(dl_handle, "createPlayer");
+	playerCreator = (creator *) dlsym(dl_handle, "createPlayer");
 	if (!playerCreator)
 		dlerror_wrapper();
 
-	IEntity	*player = playerCreator("Clad");
+	Player	*player = playerCreator("Clad");
 
 	player->announces();
 	player->markPoint();
 	player->announces();
 
-	void	(*playerDestrutor)(IEntity*);
-	playerDestrutor = (void(*)(IEntity*))dlsym(dl_handle, "deletePlayer");
+	deleter *playerDestrutor;
+	playerDestrutor = (deleter*)dlsym(dl_handle, "deletePlayer");
 	if (!playerDestrutor)
 		dlerror_wrapper();
 

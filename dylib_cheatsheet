@@ -1,0 +1,55 @@
+=================== DYNAMIC LIB GUIDELINE ===================
+
+*	Reduce the symboles exported, so your library load faster
+
+*	NEVER export global variables. Rather create an accessor to it and export
+	the accessor.
+
+*	If your library uses a function that is exported, maybe create a wrapper for
+	the function, remove the part in the function that is not usefull inside the
+	lib, put it in the wrapper, and export it.
+
+*	If you link a library but you don't use it a lot, better use it dynamicaly,
+	load it when you need a function of it, and close it after, so the image
+	that use it takes less time to load when used.
+
+================ HOW TO EXPORT/HIDE SYMBOLES ================
+
+*	If the symbole is used only in the file, use the `static` keyword to hide it
+
+*	Use an export list in wich you write the symboles name you want to export:
+		// export_list
+			_foo
+			_bar
+	And then compile with: -exported_symbols_list export_list
+
+*	Use the compiler flag:
+		-fvisibility=hidden
+	and in the file add before the symboles you want to export:
+		__attribute__((visibility("default")))
+
+=================== INITIALIZER/FINALIZER ===================
+
+*	use them in your .c[pp] to call functions when an image has just loaded
+	(INITIALIZER), and when the image is unloaded (FINALIZER).
+		__attribute__((constructor))
+		static void foo() {}
+
+		__attribute__((destructor))
+		static void bar() {}
+
+================= DL_OPEN: SCOPE AND BINDING =================
+
+*	dl_open(<path>, <scope|binding>)
+	scope:
+		RTLD_LOCAL: symboles are only visible by the image that load the lib.
+		RTLD_GLOBAL: symboles are visible by all the images laoded in the process
+
+	binding:
+		RTLD_LAZY: symboles are binded to their definitions only on the first use
+		RTLD_NOW: symboles are binded to their definitions on the load process
+
+	Good practice is to use RTLD_NOW when developing and testing a lib, and then
+	switch to RTLD_LAZY for production.
+	By default an image dependencie uses RTLD_LAZY. use -bind_at_load to compile
+	the image if you want to bind them on load.
