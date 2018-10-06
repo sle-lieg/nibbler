@@ -4,6 +4,7 @@
             "name": "Mac",
             "includePath": [
                 "${workspaceFolder}/**",
+                "${workspaceFolder}/dylibs/SFML/headers/",
 				"/usr/include/c++/**",
 				"/usr/local/include/**"
             ],

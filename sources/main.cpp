@@ -6,14 +6,12 @@
 /*   By: sle-lieg <sle-lieg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 18:14:05 by sle-lieg          #+#    #+#             */
-/*   Updated: 2018/10/05 18:02:36 by sle-lieg         ###   ########.fr       */
+/*   Updated: 2018/10/06 19:40:59 by sle-lieg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "nibbler.hpp"
-
-static const int GAME_SIDE_MIN = 300;
-static const int GAME_SIDE_MAX = 1500;
+#include "LibHandler.hpp"
 
 static Game	*initGame(int ac, char **av)
 {
@@ -37,14 +35,22 @@ static Game	*initGame(int ac, char **av)
 		std::cout << " " << GAME_SIDE_MIN << "<=HEIGHT<" << GAME_SIDE_MAX << std::endl;
 		exit(EXIT_FAILURE);
 	}
-	return new Game {width, height};
+	return new Game{width, height};
 }
 
 int main(int ac, char** av)
 {
-	Game	*game = initGame(ac, av);
-	
+	Game		*game = initGame(ac, av);
+	LibHandler	handler;
 
+	handler.openLib(SFML);
+	handler.createWindow(game->getWidth(), game->getHeight());
+	// while (true) {
+	// 	// handler.getInput();
+	// 	handler.draw(*game);
+	// 	// handler.render();
+	// 	break;
+	// }
 
 	delete game;
 	return (0);
