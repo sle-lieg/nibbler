@@ -28,6 +28,7 @@ public:
 	MyLib( void );
 	virtual ~MyLib( void );
 
+	bool	checkResolution(int width, int height) const;
 	void	createWindow(int width, int height);
 	Inputs	getInput(void);
 	// void	draw(const Game&) const;

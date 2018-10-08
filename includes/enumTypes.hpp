@@ -1,17 +1,6 @@
 #ifndef ENUMTYPES_HPP
 # define ENUMTYPES_HPP
 
-// enum class Inputs {
-// 	DEFAULT,
-// 	LEFT,
-// 	RIGHT,
-// 	ESC,
-// 	PAUSE,
-// 	LIB_1,
-// 	LIB_2,
-// 	LIB_3
-// };
-
 enum class State {
 	RUNNING,
 	PAUSE,

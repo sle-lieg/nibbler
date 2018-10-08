@@ -25,6 +25,7 @@ public:
 	void	closeLib(void);
 
 	// void	createWindow(int width, int height) const;
+	bool	checkResolution(const Scene &);
 	void	createWin(Scene &) const;
 	void	handleInput(Game &);
 	void	draw(const Game &) const;

@@ -33,8 +33,16 @@ void	LibHandler::closeLib(void) {
 	deleteMyLib(_myLib);
 
 	if (_dl_handle)
-		if (!(dlclose(_dl_handle)))
+		if (dlclose(_dl_handle))
 			_dlerror_wrapper();
+}
+
+bool	LibHandler::checkResolution(const Scene &scene) {
+	if (!_myLib->checkResolution(scene.getWidth(), scene.getHeight())) {
+		closeLib();
+		return false;
+	}
+	return true;
 }
 
 void	LibHandler::createWin(Scene &scene) const {

@@ -5,6 +5,8 @@
 # include "enumTypes.hpp"
 # include "Scene.hpp"
 
+constexpr int	TILE_SIZE {0x10};
+
 enum class Inputs : int;
 class Game
 {
