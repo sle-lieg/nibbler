@@ -1,13 +1,17 @@
 #ifndef GAME_HPP
 # define GAME_HPP
 
-#include <iostream>
+# include <iostream>
+# include "enumTypes.hpp"
+# include "Scene.hpp"
 
+enum class Inputs : int;
 class Game
 {
 private:
-	int		_width;
-	int		_height;
+	Scene	_scene;
+	State	_state;
+	float	_speed;
 	// Snake	*_snake;
 
 	Game(Game const &);
@@ -18,8 +22,14 @@ public:
 	Game(int width, int height);
 	~Game( void );
 
-	int	getWidth(void) const;
-	int	getHeight(void) const;
+	Scene	&getScene(void);
+	bool	isOpen(void) const;
+
+	void	switchDirection(Inputs input);
+	void	quitGame(void);
+	void	pauseGame(void);
+	void	updateGame(void);
+
 };
 
 #endif

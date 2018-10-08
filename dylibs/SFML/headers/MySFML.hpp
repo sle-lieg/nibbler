@@ -2,12 +2,24 @@
 # define MYSFML_HPP
 
 #include <iostream>
-#include <SFML/Window.hpp>
+#include <SFML/Graphics.hpp>
+#include "IMyLib.hpp"
 
-class MyLib
+enum class Inputs : int {
+	DEFAULT,
+	LEFT,
+	RIGHT,
+	ESC,
+	PAUSE,
+	LIB_1,
+	LIB_2,
+	LIB_3
+};
+
+class MyLib: public IMyLib
 {
 private:
-	sf::Window _window;
+	sf::RenderWindow _window;
 
 	MyLib&	operator=(MyLib const &);
 	MyLib(MyLib const &);
@@ -16,14 +28,15 @@ public:
 	MyLib( void );
 	virtual ~MyLib( void );
 
-	virtual void	createWindow(int width, int height);
-	// void	draw(const Game) const;
+	void	createWindow(int width, int height);
+	Inputs	getInput(void);
+	// void	draw(const Game&) const;
 };
 
 extern "C"	MyLib *createMyLib(void);
 typedef MyLib *MyLibCreator(void);
 
-extern "C" void	deleteMyLib(void);
+extern "C" void	deleteMyLib(MyLib *);
 typedef void	MyLibDeleter(MyLib *);
 
 

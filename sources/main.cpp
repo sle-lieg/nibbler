@@ -6,7 +6,7 @@
 /*   By: sle-lieg <sle-lieg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/03 18:14:05 by sle-lieg          #+#    #+#             */
-/*   Updated: 2018/10/06 19:40:59 by sle-lieg         ###   ########.fr       */
+/*   Updated: 2018/10/08 16:19:56 by sle-lieg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,16 @@ int main(int ac, char** av)
 	LibHandler	handler;
 
 	handler.openLib(SFML);
-	handler.createWindow(game->getWidth(), game->getHeight());
-	// while (true) {
-	// 	// handler.getInput();
-	// 	handler.draw(*game);
-	// 	// handler.render();
-	// 	break;
-	// }
+	handler.createWin(game->getScene());
+	// handler.createWindow(game->getWidth(), game->getHeight());
+
+	while (game->isOpen()) {
+		handler.handleInput(*game);
+		game->updateGame();
+		// handler.draw(*game);
+		// handler.render();
+		// break;
+	}
 
 	delete game;
 	return (0);

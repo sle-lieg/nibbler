@@ -9,6 +9,7 @@ OBJECTS_D	= objects/
 DEP_D		= dependencies/
 
 LIBS_SFML	= /Users/sle-lieg/.brew/Cellar/sfml/2.4.2_1/lib/libsfml-window.2.4.2.dylib 
+LIBS_SFML	:= $(LIBS_SFML) /Users/sle-lieg/.brew/Cellar/sfml/2.4.2_1/lib/libsfml-graphics.2.4.2.dylib
 LIBS_SFML	:= $(LIBS_SFML) /Users/sle-lieg/.brew/Cellar/sfml/2.4.2_1/lib/libsfml-system.2.4.2.dylib
 
 ############## SOURCES ##############

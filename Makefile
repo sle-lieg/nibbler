@@ -20,7 +20,7 @@ INCLUDES	= -I$(INCLUDES_D) -I$(HEADERS_D) -I$(MY_SFML_PATH)headers
 
 ############## SOURCES ##############
 SOURCES_F	= main.cpp
-CLASSES_F	= Game.cpp LibHandler.cpp
+CLASSES_F	= Game.cpp LibHandler.cpp Scene.cpp
 
 SOURCES	= $(addprefix $(SOURCES_D), $(SOURCES_F))
 CLASSES	= $(addprefix $(CLASSES_D), $(CLASSES_F))

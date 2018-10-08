@@ -4,6 +4,7 @@
 # include <iostream>
 # include <sstream>
 # include "Game.hpp"
+# include "enumTypes.hpp"
 
 constexpr int	GAME_SIDE_MIN { 300 };
 constexpr int	GAME_SIDE_MAX { 1500 };
