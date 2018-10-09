@@ -1,7 +1,7 @@
 #include "Scene.hpp"
 
 Scene::Scene(int width, int height) :
-_width{width}, _height{height}, _background{Color::BLUE} {}
+_width{width}, _height{height} {}
 
 Scene::~Scene(void) {}
 

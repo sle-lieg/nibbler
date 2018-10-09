@@ -65,6 +65,13 @@ Inputs	MyLib::getInput(void) {
 	return Inputs::DEFAULT;
 }
 
+void	MyLib::draw(const Game &game) {
+	
+	sf::Color *col = new sf::Color(66, 134, 244, 255);
+	_window.clear(*col);
+	_window.display();
+}
+
 
 MyLib	*createMyLib(void) {
 	return new MyLib;

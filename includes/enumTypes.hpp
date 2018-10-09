@@ -7,9 +7,9 @@ enum class State {
 	OFF
 };
 
-enum class Color {
-	BLUE
-};
+// enum class Color {
+// 	BLUE
+// };
 
 namespace Difficulty {
 	static const float EASY = 3.0f;

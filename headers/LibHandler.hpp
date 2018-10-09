@@ -28,7 +28,7 @@ public:
 	bool	checkResolution(const Scene &);
 	void	createWin(Scene &) const;
 	void	handleInput(Game &);
-	void	draw(const Game &) const;
+	void	draw(const Game &);
 	void	switchLibrary(Inputs input);
 };
 

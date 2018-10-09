@@ -8,7 +8,7 @@ class Scene
 private:
 	int		_width;
 	int		_height;
-	Color	_background;
+	// Color	_background;
 
 	Scene(void);
 	Scene(Scene const &);

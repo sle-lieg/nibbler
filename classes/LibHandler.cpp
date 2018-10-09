@@ -79,12 +79,6 @@ void	LibHandler::switchLibrary(Inputs input) {
 		std::cout << "input: " << static_cast<int>(input) << " current lib: " << libInfos.dli_fname << std::endl;
 }
 
-void	LibHandler::draw(const Game& game) const {
-	void	(*libDraw)(const Game&);
-
-	if (!(libDraw = (void(*)(const Game&))dlsym(_dl_handle, "draw")))
-		_dlerror_wrapper();
-	libDraw(game);
-
-	std::cout << "DRAWING" << std::endl;
+void	LibHandler::draw(const Game& game) {
+	_myLib->draw(game);
 }

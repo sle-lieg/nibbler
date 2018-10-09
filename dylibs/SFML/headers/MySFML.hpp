@@ -31,7 +31,7 @@ public:
 	bool	checkResolution(int width, int height) const;
 	void	createWindow(int width, int height);
 	Inputs	getInput(void);
-	// void	draw(const Game&) const;
+	void	draw(const Game &);
 };
 
 extern "C"	MyLib *createMyLib(void);
