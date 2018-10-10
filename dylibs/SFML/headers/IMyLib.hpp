@@ -3,16 +3,27 @@
 
 #include "MyContainers.hpp"
 
-class Game;
-enum class Inputs : int;
+enum class Inputs : int {
+	DEFAULT,
+	LEFT,
+	RIGHT,
+	ESC,
+	PAUSE,
+	LIB_1,
+	LIB_2,
+	LIB_3
+};
+
 class IMyLib
 {
 public:
-	virtual void	createWindow(int width, int height) = 0;
-	virtual Inputs	getInput(void) = 0;
+	virtual ~IMyLib(void) {};
 	virtual bool	checkResolution(int width, int height) const = 0;
-	virtual void	draw(const Game &) = 0;
-	// virtual void	draw(const Game&) = 0;
+	virtual void	initGraphicLibObjects(const MyContainers &) = 0;
+	virtual void	draw(const MyContainers &) = 0;
+	virtual Inputs	getInput(void) = 0;
+
+	// virtual void	createWindow(int width, int height) = 0;
 };
 
 #endif

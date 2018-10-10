@@ -3,14 +3,15 @@
 
 # include <iostream>
 # include <sstream>
-# include "Game.hpp"
+# include <stdexcept>
+// # include "Game.hpp"
 # include "enumTypes.hpp"
 
-constexpr int	GAME_SIDE_MIN { 320 };
-// constexpr int	GAME_SIDE_MAX { 1500 };
+constexpr int	NB_TILES_MIN { 10 };
 constexpr auto	SFML { "libmysfml.dylib" };
 constexpr auto	OPENGL { "libmyopengl.dylib" };
 constexpr auto	SDL { "libmysdl.dylib" };
 
+// constexpr int	TILE_SIZE {0x20};
 
 #endif // NIBBLER_HPP

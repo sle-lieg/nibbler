@@ -18,9 +18,9 @@ public:
 	virtual int					getHeight(void) const;
 	virtual const std::string&	getTexture(void) const;
 
-	virtual void		setWidth(int width);
-	virtual void		setHeight(int height);
-	virtual void		setTexture(const std::string &texture);
+	// virtual void		setWidth(int width);
+	// virtual void		setHeight(int height);
+	// virtual void		setTexture(const std::string &texture);
 
 private:
 	MyWindow(void);

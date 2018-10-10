@@ -1,7 +1,8 @@
 #include "MyContainers.hpp"
 
 MyContainers::MyContainers(int width, int height) :
-	_mainWindow(width, height), _gameGrid(width, height) {}
+	_mainWindow(width, height), _gameGrid(width, height)
+{}
 
 MyContainers::~MyContainers( void ) {
 }

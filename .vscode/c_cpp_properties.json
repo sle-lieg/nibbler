@@ -4,7 +4,7 @@
             "name": "Mac",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/dylibs/includes",
+                "${workspaceFolder}/dylibs/includes/",
 				"/usr/include/c++/**",
 				"/usr/local/include/**"
             ],

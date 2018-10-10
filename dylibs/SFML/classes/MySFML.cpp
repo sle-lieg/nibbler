@@ -22,14 +22,28 @@ bool	MySFML::checkResolution(int width, int height) const {
 	return ret;
 }
 
-void	MySFML::createWindow(int width, int height) {
-	_window.create(sf::VideoMode(width, height), "myWin", sf::Style::Default);
+void	MySFML::initGraphicLibObjects(const MyContainers & game) {
+	_mainWindow.create(sf::VideoMode(game.getMainWindow().getWidth() , game.getMainWindow().getHeight()), "mainWin", sf::Style::Default);
+	
+	sf::Texture *texture = new sf::Texture;
+
+	texture->loadFromFile("dylibs/textures/tileset.png", sf::IntRect(0, 0, 32, 32));
+	texture->setRepeated(true);
+	texture->setSmooth(true);
+	_gameGrid.setTexture(*texture);
+	// _gameGrid.create(sf::VideoMode(game.getGameGrid().getWidth() , game.getGameGrid().getHeight()), "gameGrid", sf::Style::None);
+
 }
+
+
+// void	MySFML::createWindow(int width, int height) {
+// 	_window.create(sf::VideoMode(width, height), "myWin", sf::Style::Default);
+// }
 
 Inputs	MySFML::getInput(void) {
 	sf::Event event;
 
-	while (_window.pollEvent(event)) {
+	while (_mainWindow.pollEvent(event)) {
 		switch (event.type) {
 			case sf::Event::KeyPressed:
 				switch (event.key.code) {
@@ -65,11 +79,17 @@ Inputs	MySFML::getInput(void) {
 	return Inputs::DEFAULT;
 }
 
-void	MySFML::draw(const Game &game) {
-	
-	sf::Color *col = new sf::Color(66, 134, 244, 255);
-	_window.clear(*col);
-	_window.display();
+void	MySFML::draw(const MyContainers &game) {
+	(void)game;
+	// _drawMainWindow(game.getMainWindow());
+	// _drawGameGrid(game.getGameGrid());
+	// _drawSnake(game.getSnake());
+	// _mainWindow.clear(sf::Color::Transparent);
+	_mainWindow.draw(_gameGrid);
+	// _mainWindow.clear(sf::Color::Blue);
+	// _gameGrid.clear(sf::Color::Red);
+	_mainWindow.display();
+	// _gameGrid.display();
 }
 
 IMyLib	*createMyLib(void) {

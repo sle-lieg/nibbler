@@ -5,33 +5,26 @@
 #include <SFML/Graphics.hpp>
 #include "IMyLib.hpp"
 
-enum class Inputs : int {
-	DEFAULT,
-	LEFT,
-	RIGHT,
-	ESC,
-	PAUSE,
-	LIB_1,
-	LIB_2,
-	LIB_3
-};
-
 class MySFML: public IMyLib
 {
 private:
-	sf::RenderWindow _window;
+	sf::RenderWindow _mainWindow;
+	sf::Sprite	_background;
+	sf::Sprite	_gameGrid;
+	// sf::RenderWindow _gameGrid;
 
 	MySFML&	operator=(MySFML const &);
 	MySFML(MySFML const &);
 
 public:
-	MySFML( void );
-	virtual ~MySFML( void );
+	MySFML(void);
+	virtual ~MySFML(void);
 
 	bool	checkResolution(int width, int height) const;
-	void	createWindow(int width, int height);
+	void	initGraphicLibObjects(const MyContainers &);
+	// void	createWindow(int width, int height);
 	Inputs	getInput(void);
-	void	draw(const Game &);
+	void	draw(const MyContainers &);
 };
 
 extern "C"	IMyLib *createMyLib(void);

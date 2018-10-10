@@ -1,6 +1,6 @@
 # include "LibHandler.hpp"
 
-LibHandler::LibHandler(void) : _dl_handle {nullptr} {}
+LibHandler::LibHandler(void) : _dl_handle{nullptr} {}
 
 LibHandler::~LibHandler(void) {
 	closeLib();

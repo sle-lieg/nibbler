@@ -10,17 +10,19 @@ HEADERS_D	= headers/
 INCLUDES_D	= includes/
 OBJECTS_D	= objects/
 DEP_D		= dependencies/
+DYLIBS_D	= dylibs/
 
 ############### PATHS ###############
 MY_OPENGL_PATH	= dylibs/OpenGL/
 MY_SFML_PATH	= dylibs/SFML/
 MY_SDL_PATH		= dylibs/SDL/
 
-INCLUDES	= -I$(INCLUDES_D) -I$(HEADERS_D) -I$(MY_SFML_PATH)headers
+
+INCLUDES	= -I$(INCLUDES_D) -I$(HEADERS_D) -I$(DYLIBS_D)$(INCLUDES_D)
 
 ############## SOURCES ##############
 SOURCES_F	= main.cpp
-CLASSES_F	= Game.cpp LibHandler.cpp Scene.cpp
+CLASSES_F	= Game.cpp
 
 SOURCES	= $(addprefix $(SOURCES_D), $(SOURCES_F))
 CLASSES	= $(addprefix $(CLASSES_D), $(CLASSES_F))

@@ -1,8 +1,8 @@
 #ifndef MYCONTAINERS_HPP
 # define MYCONTAINERS_HPP
 
-#include "MyWindow.hpp"
-#include "MyGameGrid.hpp"
+# include "MyWindow.hpp"
+# include "MyGameGrid.hpp"
 
 class MyContainers
 {
@@ -18,10 +18,10 @@ private:
 
 public:
 	MyContainers(int width, int height);
-	~MyContainers( void );
+	virtual ~MyContainers( void );
 
-	const MyWindow	&getMainWindow(void) const;
-	const MyWindow	&getGameGrid(void) const;
+	virtual const MyWindow	&getMainWindow(void) const;
+	virtual const MyWindow	&getGameGrid(void) const;
 
 	// bool		isOpen(void) const;
 

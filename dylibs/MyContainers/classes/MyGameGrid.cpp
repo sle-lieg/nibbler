@@ -1,9 +1,13 @@
 #include "MyGameGrid.hpp"
 
 MyGameGrid::MyGameGrid(int width, int height) :
-	MyWindow(width, height)
+	MyWindow(width & ~(TILE_SIZE - 1), height & ~(TILE_SIZE - 1))
 {
-	// set nbTiles***
+	std::cout << "Game grid width: " << _width << std::endl;
+	std::cout << "Game grid height: " << _height << std::endl;
+
+	_nbTilesWidth = _width / TILE_SIZE;
+	_nbTilesHeight = _height / TILE_SIZE;
 }
 
 MyGameGrid::~MyGameGrid(void)

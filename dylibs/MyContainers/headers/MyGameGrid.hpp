@@ -3,6 +3,8 @@
 
 #include "MyWindow.hpp"
 
+constexpr int TILE_SIZE = 32;
+
 class MyGameGrid : public MyWindow
 {
 private:
@@ -15,10 +17,10 @@ private:
 
 public:
 	MyGameGrid(int width, int height);
-	~MyGameGrid(void);
+	virtual ~MyGameGrid(void);
 
-	int	getNbTilesWidth(void) const;
-	int	getNbTilesHeight(void) const;
+	virtual int	getNbTilesWidth(void) const;
+	virtual int	getNbTilesHeight(void) const;
 };
 
 #endif

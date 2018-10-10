@@ -9,8 +9,8 @@
 class LibHandler
 {
 private:
+	IMyLib	*_myLib;
 	void	*_dl_handle;
-	MyLib	*_myLib;
 
 	void	_dlerror_wrapper(void) const;
 
