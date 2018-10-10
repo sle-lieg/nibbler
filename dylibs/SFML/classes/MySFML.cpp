@@ -1,10 +1,10 @@
 #include "MySFML.hpp"
 
-MyLib::MyLib(void) {}
+MySFML::MySFML(void) {}
 
-MyLib::~MyLib(void) {}
+MySFML::~MySFML(void) {}
 
-bool	MyLib::checkResolution(int width, int height) const {
+bool	MySFML::checkResolution(int width, int height) const {
 	// std::cout << "RESOLUTION ENTERED: " << width << " x " << height << std::endl;
 	// std::cout << "SCREEN RESOLUTION	: " << sf::VideoMode::getDesktopMode().width << " x " << sf::VideoMode::getDesktopMode().height << std::endl;
 	int		screenWidth = sf::VideoMode::getDesktopMode().width;
@@ -22,11 +22,11 @@ bool	MyLib::checkResolution(int width, int height) const {
 	return ret;
 }
 
-void	MyLib::createWindow(int width, int height) {
+void	MySFML::createWindow(int width, int height) {
 	_window.create(sf::VideoMode(width, height), "myWin", sf::Style::Default);
 }
 
-Inputs	MyLib::getInput(void) {
+Inputs	MySFML::getInput(void) {
 	sf::Event event;
 
 	while (_window.pollEvent(event)) {
@@ -65,18 +65,17 @@ Inputs	MyLib::getInput(void) {
 	return Inputs::DEFAULT;
 }
 
-void	MyLib::draw(const Game &game) {
+void	MySFML::draw(const Game &game) {
 	
 	sf::Color *col = new sf::Color(66, 134, 244, 255);
 	_window.clear(*col);
 	_window.display();
 }
 
-
-MyLib	*createMyLib(void) {
-	return new MyLib;
+IMyLib	*createMyLib(void) {
+	return new MySFML;
 }
 
-void	deleteMyLib(MyLib *myLib) {
-	delete myLib;
+void	deleteMyLib(IMyLib *MySFML) {
+	delete MySFML;
 }

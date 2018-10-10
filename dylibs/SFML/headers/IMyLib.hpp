@@ -1,6 +1,8 @@
 #ifndef IMYLIB_HPP
 # define IMYLIB_HPP
 
+#include "MyContainers.hpp"
+
 class Game;
 enum class Inputs : int;
 class IMyLib

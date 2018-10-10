@@ -16,17 +16,17 @@ enum class Inputs : int {
 	LIB_3
 };
 
-class MyLib: public IMyLib
+class MySFML: public IMyLib
 {
 private:
 	sf::RenderWindow _window;
 
-	MyLib&	operator=(MyLib const &);
-	MyLib(MyLib const &);
+	MySFML&	operator=(MySFML const &);
+	MySFML(MySFML const &);
 
 public:
-	MyLib( void );
-	virtual ~MyLib( void );
+	MySFML( void );
+	virtual ~MySFML( void );
 
 	bool	checkResolution(int width, int height) const;
 	void	createWindow(int width, int height);
@@ -34,11 +34,11 @@ public:
 	void	draw(const Game &);
 };
 
-extern "C"	MyLib *createMyLib(void);
-typedef MyLib *MyLibCreator(void);
+extern "C"	IMyLib *createMyLib(void);
+typedef IMyLib *MyLibCreator(void);
 
-extern "C" void	deleteMyLib(MyLib *);
-typedef void	MyLibDeleter(MyLib *);
+extern "C" void	deleteMyLib(IMyLib *);
+typedef void	MyLibDeleter(IMyLib *);
 
 
 #endif

@@ -3,7 +3,7 @@
 
 # include <iostream>
 # include "enumTypes.hpp"
-# include "Scene.hpp"
+# include "MyContainers.hpp"
 
 constexpr int	TILE_SIZE {0x10};
 
@@ -11,7 +11,7 @@ enum class Inputs : int;
 class Game
 {
 private:
-	Scene	_scene;
+
 	State	_state;
 	float	_speed;
 	// Snake	*_snake;

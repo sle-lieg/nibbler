@@ -17,10 +17,4 @@ namespace Difficulty {
 	static const float HARD = 1.0f;
 }
 
-// enum class Difficulty {
-// 	EASY = 3,
-// 	MEDIUM = 2,
-// 	HARD = 1
-// };
-
 #endif
