@@ -23,7 +23,7 @@ bool	MySFML::checkResolution(int width, int height) const {
 }
 
 void	MySFML::initGraphicLibObjects(const MyContainers & game) {
-	_mainWindow.create(sf::VideoMode(game.getMainWindow().getWidth() , game.getMainWindow().getHeight()), "mainWin", sf::Style::Default);
+	_mainWindow.create(sf::VideoMode(game.getGameGrid().getWidth() , game.getGameGrid().getHeight()), "mainWin", sf::Style::Default);
 	
 	sf::Texture *texture = new sf::Texture;
 
@@ -31,6 +31,7 @@ void	MySFML::initGraphicLibObjects(const MyContainers & game) {
 	texture->setRepeated(true);
 	texture->setSmooth(true);
 	_gameGrid.setTexture(*texture);
+	_gameGrid.setPosition(sf::Vector2f(0.0f, 32.0f));
 	// _gameGrid.create(sf::VideoMode(game.getGameGrid().getWidth() , game.getGameGrid().getHeight()), "gameGrid", sf::Style::None);
 
 }
@@ -79,13 +80,25 @@ Inputs	MySFML::getInput(void) {
 	return Inputs::DEFAULT;
 }
 
+void	MySFML::_drawGameGrid(const MyGameGrid & gg) {
+	int nbTilesWidth = gg.getNbTilesWidth();
+	int nbTilesHeight = gg.getNbTilesHeight();
+
+	for (int y = 1; y < nbTilesHeight; y++) {
+		for (int x = 0; x < nbTilesWidth; x++) {
+			_gameGrid.setPosition(x * 32.0f, y * 32.0f);
+			_mainWindow.draw(_gameGrid);
+		}
+	}
+}
+
 void	MySFML::draw(const MyContainers &game) {
-	(void)game;
 	// _drawMainWindow(game.getMainWindow());
-	// _drawGameGrid(game.getGameGrid());
+	_mainWindow.clear();
+	_drawGameGrid(game.getGameGrid());
 	// _drawSnake(game.getSnake());
 	// _mainWindow.clear(sf::Color::Transparent);
-	_mainWindow.draw(_gameGrid);
+	// _mainWindow.draw(_gameGrid);
 	// _mainWindow.clear(sf::Color::Blue);
 	// _gameGrid.clear(sf::Color::Red);
 	_mainWindow.display();

@@ -7,7 +7,7 @@
 class MyContainers
 {
 private:
-	MyWindow	_mainWindow;
+	// MyWindow	_mainWindow;
 	MyGameGrid	_gameGrid;
 	// MyHud		_hud;
 	// Snake	*_snake;
@@ -20,8 +20,8 @@ public:
 	MyContainers(int width, int height);
 	virtual ~MyContainers( void );
 
-	virtual const MyWindow	&getMainWindow(void) const;
-	virtual const MyWindow	&getGameGrid(void) const;
+	// virtual const MyWindow		&getMainWindow(void) const;
+	virtual const MyGameGrid	&getGameGrid(void) const;
 
 	// bool		isOpen(void) const;
 

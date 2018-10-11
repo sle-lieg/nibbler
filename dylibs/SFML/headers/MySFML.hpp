@@ -13,6 +13,8 @@ private:
 	sf::Sprite	_gameGrid;
 	// sf::RenderWindow _gameGrid;
 
+	void	_drawGameGrid(const MyGameGrid & gg);
+
 	MySFML&	operator=(MySFML const &);
 	MySFML(MySFML const &);
 
