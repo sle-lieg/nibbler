@@ -19,8 +19,8 @@ class IMyLib
 public:
 	virtual ~IMyLib(void) {};
 	virtual bool	checkResolution(int width, int height) const = 0;
-	virtual void	initGraphicLibObjects(const MyContainers &) = 0;
-	virtual void	draw(const MyContainers &) = 0;
+	virtual void	initGraphicLibObjects(MyContainers &) = 0;
+	virtual void	draw(MyContainers &) = 0;
 	virtual Inputs	getInput(void) = 0;
 
 	// virtual void	createWindow(int width, int height) = 0;

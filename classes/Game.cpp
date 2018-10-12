@@ -73,7 +73,10 @@ void	Game::_initContainers(int width, int height) {
 	if (!(createMyContainers = (MyContainersCreator*)dlsym(_dl_handle, "createMyContainers")))
 		throw std::invalid_argument(dlerror());
 
-	_myContainers = createMyContainers(width, height);
+	_myContainers = createMyContainers(width, height, TILE_SIZE);
+
+	// _myContainers->initMainWindow(width, height);
+	// _myContainers->initSnake(width, height);
 }
 
 void	Game::_usage(void) const {
@@ -93,8 +96,6 @@ void	Game::drawGame(void) {
 	_myLib->draw(*_myContainers);
 }
 
-// ##########################################
-
 void	Game::handleInputs(void) {
 	Inputs input = _myLib->getInput();
 
@@ -102,21 +103,38 @@ void	Game::handleInputs(void) {
 		// case Inputs::LIB_1:
 		// case Inputs::LIB_2:
 		// case Inputs::LIB_3:
-		// 	switchLibrary(input);
-		// case Inputs::LEFT:
-		// case Inputs::RIGHT:
-		// 	game.switchDirection(input);
-		// 	break;
+		// 	_switchLibrary(input);
+		case Inputs::LEFT:
+		case Inputs::RIGHT:
+			_switchDirection(input);
+			break;
 		// case Inputs::ESC:
-		// 	game.quitGame();
+		// 	_quitGame();
 		// 	break;
 		// case Inputs::PAUSE:
-		// 	game.pauseGame();
+		// 	_pauseGame();
 		// 	break;
 		default:
 			break;
 	}
 }
+
+void	Game::_switchDirection(Inputs input) {
+	auto	&snake = _myContainers->getSnake();
+	int		dir = static_cast<int>(snake.getDirection());
+	// auto &snakeDirection = _myContainers->getSnake().getDirection();
+
+	if (input == Inputs::LEFT)
+		snake.setDirection(static_cast<SnakeDirection>((dir + 1) % 4));
+	else {
+		if (dir == 0)
+			snake.setDirection(SnakeDirection::RIGHT);
+		else
+			snake.setDirection(static_cast<SnakeDirection>(dir - 1));
+	}
+}
+
+// ##########################################
 
 // void	Game::switchDirection(Inputs input) {
 // 	std::cout << "Switch direction: input=[" << static_cast<int>(input) << "]" << std::endl;

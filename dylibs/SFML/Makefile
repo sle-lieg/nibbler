@@ -19,7 +19,7 @@ MYSFML_F	= MySFML.cpp
 MYSFML	= $(addprefix $(CLASSES_D), $(MYSFML_F))
 
 ########### MYCONTAINERS ###########
-MYCONTAINERS_F	= MyWindow.cpp MyGameGrid.cpp MyContainers.cpp
+MYCONTAINERS_F	= MyWindow.cpp MyGameGrid.cpp MyContainers.cpp MySnake.cpp
 MYCONTAINERS	= $(addprefix $(MYCONTAINERS_D)$(CLASSES_D), $(MYCONTAINERS_F))
 
 ############## OBJECTS ##############

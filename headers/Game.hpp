@@ -8,6 +8,8 @@
 # include "MySFML.hpp"
 # include "nibbler.hpp"
 
+constexpr int TILE_SIZE = 32;
+
 // enum class Inputs : int;
 class Game
 {
@@ -23,6 +25,7 @@ private:
 	void	_openLibrary(const char *lib);
 	void	_closeLibrary(void);
 	void	_initContainers(int widht, int height);
+	void	_switchDirection(Inputs input);
 
 	Game(Game const &);
 	Game& operator=(Game const &);
@@ -40,7 +43,6 @@ public:
 
 	// Scene	&getScene(void);
 
-	// void	switchDirection(Inputs input);
 	// void	quitGame(void);
 	// void	pauseGame(void);
 	// void	updateGame(void);

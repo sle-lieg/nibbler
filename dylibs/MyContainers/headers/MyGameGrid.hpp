@@ -3,11 +3,12 @@
 
 #include "MyWindow.hpp"
 
-constexpr int TILE_SIZE = 32;
+// constexpr int TILE_SIZE = 32;
 
 class MyGameGrid : public MyWindow
 {
 private:
+	int	_tileSize;
 	int	_nbTilesWidth;
 	int	_nbTilesHeight;
 
@@ -16,11 +17,12 @@ private:
 	MyGameGrid&	operator=(MyGameGrid const &);
 
 public:
-	MyGameGrid(int width, int height);
+	MyGameGrid(int width, int height, int tileSize);
 	virtual ~MyGameGrid(void);
 
 	virtual int	getNbTilesWidth(void) const;
 	virtual int	getNbTilesHeight(void) const;
+	virtual int	getTileSize(void) const;
 };
 
 #endif

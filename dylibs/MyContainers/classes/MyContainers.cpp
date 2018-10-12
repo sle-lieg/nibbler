@@ -1,7 +1,7 @@
 #include "MyContainers.hpp"
 
-MyContainers::MyContainers(int width, int height) :
-	_gameGrid(width, height)
+MyContainers::MyContainers(int width, int height, int tileSize) :
+	_gameGrid(width, height, tileSize), _snake(width, height, tileSize)
 {}
 
 MyContainers::~MyContainers( void ) {
@@ -9,10 +9,12 @@ MyContainers::~MyContainers( void ) {
 
 // const MyWindow		&MyContainers::getMainWindow(void) const { return _mainWindow; }
 
-const MyGameGrid	&MyContainers::getGameGrid(void) const { return _gameGrid; }
+MyGameGrid	&MyContainers::getGameGrid(void) { return _gameGrid; }
+MySnake		&MyContainers::getSnake(void) { return _snake; }
 
-MyContainers	*createMyContainers(int width, int height) {
-	return new MyContainers(width, height);
+
+MyContainers	*createMyContainers(int width, int height, int tileSize) {
+	return new MyContainers(width, height, tileSize);
 }
 
 void	deleteMyContainers(MyContainers *myContainers) {
