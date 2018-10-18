@@ -1,52 +1,51 @@
 #ifndef GAME_HPP
 # define GAME_HPP
 
-// # include <iostream>
+# include <iostream>
 # include <dlfcn.h>
-// # include "enumTypes.hpp"
-# include "MyContainers.hpp"
-# include "MySFML.hpp"
+# include <memory.h>
 # include "nibbler.hpp"
+# include "GameEntity.hpp"
+# include "Clock.hpp"
+# include "IMyLib.hpp"
 
-constexpr int TILE_SIZE = 32;
-
-// enum class Inputs : int;
 class Game
 {
 private:
-	void			*_dl_handle;
-	IMyLib			*_myLib;
-	MyContainers	*_myContainers;
-	State			_state;
-	float			_speed;
-	// Snake	*_snake;
+	State		_state;
+	Clock		_clock;
+	float		_speed;
+	int			_gameWidth;
+	int			_gameHeight;
+	int			_direction;
+
+	// GAME ELEMENTS
+	std::unique_ptr<GameEntity>	_gameGrid;
+	std::unique_ptr<GameEntity>	_snake;
+	std::unique_ptr<GameEntity>	_fruit;
+
+	// DYLIB ELEMENTS
+	void	*_dl_handle;
+	IMyLib	*_dylib;
+
 
 	void	_usage(void) const;
 	void	_openLibrary(const char *lib);
 	void	_closeLibrary(void);
-	void	_initContainers(int widht, int height);
-	void	_switchDirection(Inputs input);
+	void	_dlerrorWrapper() const;
+	void	_initGameElements(void);
 
-	Game(Game const &);
-	Game& operator=(Game const &);
 	Game( void );
-
+	Game(Game const &);
+	Game&	operator=(Game const &);
 public:
 	Game(int ac, char **av);
-	// Game(int width, int height);
-	~Game( void );
+	~Game(void);
 
+	void	start(void);
 	bool	isOpen(void) const;
-	void	drawGame(void);
 	void	handleInputs(void);
-	// ########################
-
-	// Scene	&getScene(void);
-
-	// void	quitGame(void);
-	// void	pauseGame(void);
-	// void	updateGame(void);
-
+	void	drawGame(void) const;
 };
 
 #endif

@@ -1,45 +1,32 @@
 #include "MySFML.hpp"
 
-MySFML::MySFML(void) {}
-
-MySFML::~MySFML(void) {}
-
-bool	MySFML::checkResolution(int width, int height) const {
-	// std::cout << "RESOLUTION ENTERED: " << width << " x " << height << std::endl;
-	// std::cout << "SCREEN RESOLUTION	: " << sf::VideoMode::getDesktopMode().width << " x " << sf::VideoMode::getDesktopMode().height << std::endl;
-	int		screenWidth = sf::VideoMode::getDesktopMode().width;
-	int		screenHeight = sf::VideoMode::getDesktopMode().height;
-	bool	ret = true;
-
-	if (width > screenWidth) {
-		std::cout << "error: width [\033[1;31m" << width << "\033[0m] higher than screen resolution width [\033[1;32m" << screenWidth << "\033[0m]" << std::endl;
-		ret = false;
-	}
-	if (height > screenHeight) {
-		std::cout << "error: height [\033[1;31m" << height << "\033[0m] higher than screen resolution height [\033[1;32m" << screenHeight << "\033[0m]" << std::endl;
-		ret = false;
-	}
-	return ret;
-}
-
-void	MySFML::initGraphicLibObjects(MyContainers & game) {
-	_mainWindow.create(sf::VideoMode(game.getGameGrid().getWidth() , game.getGameGrid().getHeight()), "mainWin", sf::Style::Default);
+MySFML::MySFML(int width, int height, int tileSize) :
+	_tileSize{tileSize}
+{
+	_window.create(sf::VideoMode(width , height), "mainWin", sf::Style::Default);
 	
-	// std::shared_ptr<sf::Texture> texture = std::make_shared<sf::Texture>();
-
-	_gameGridTexture.loadFromFile("dylibs/textures/myTileSet.png", sf::IntRect(96, 0, 32, 32));
+	_fieldTexture.loadFromFile("dylibs/textures/myTileSet.png", sf::IntRect(96, 0, 32, 32));
 	_wallTexture.loadFromFile("dylibs/textures/myTileSet.png", sf::IntRect(64, 0, 32, 32));
 	_snakeTexture.loadFromFile("dylibs/textures/snake.png");
 
-	_gameGrid.setTexture(_gameGridTexture);
-	_wall.setTexture(_wallTexture);
-	_snake.setTexture(_snakeTexture);
-
-
-	// _gameGrid.setPosition(sf::Vector2f(0.0f, 32.0f));
-	// _gameGrid.create(sf::VideoMode(game.getGameGrid().getWidth() , game.getGameGrid().getHeight()), "gameGrid", sf::Style::None);
-
+	_fieldSprite.setTexture(_fieldTexture);
+	_wallSprite.setTexture(_wallTexture);
+	_snakeSprite.setTexture(_snakeTexture);
 }
+
+MySFML::~MySFML(void) {}
+
+// void	MySFML::initGraphicLibObjects(int width, int height) {
+// 	_window.create(sf::VideoMode(width , height), "mainWin", sf::Style::Default);
+	
+// 	_fieldTexture.loadFromFile("dylibs/textures/myTileSet.png", sf::IntRect(96, 0, 32, 32));
+// 	_wallTexture.loadFromFile("dylibs/textures/myTileSet.png", sf::IntRect(64, 0, 32, 32));
+// 	_snakeTexture.loadFromFile("dylibs/textures/snake.png");
+
+// 	_fieldSprite.setTexture(_fieldTexture);
+// 	_wallSprite.setTexture(_wallTexture);
+// 	_snakeSprite.setTexture(_snakeTexture);
+// }
 
 
 // void	MySFML::createWindow(int width, int height) {
@@ -49,7 +36,7 @@ void	MySFML::initGraphicLibObjects(MyContainers & game) {
 Inputs	MySFML::getInput(void) {
 	sf::Event event;
 
-	while (_mainWindow.pollEvent(event)) {
+	while (_window.pollEvent(event)) {
 		switch (event.type) {
 			case sf::Event::KeyPressed:
 				switch (event.key.code) {
@@ -85,53 +72,43 @@ Inputs	MySFML::getInput(void) {
 	return Inputs::DEFAULT;
 }
 
-void	MySFML::_drawGameGrid(const MyGameGrid & gg) {
-	static int nbTilesWidth = gg.getNbTilesWidth();
-	static int nbTilesHeight = gg.getNbTilesHeight();
-
-	for (int y = 1; y < nbTilesHeight; y++) {
-		for (int x = 0; x < nbTilesWidth; x++) {
-			if (x == 0 || x == nbTilesWidth - 1 || y == 1 || y == nbTilesHeight - 1) {
-				_wall.setPosition(x * 32.0f, y * 32.0f);
-				_mainWindow.draw(_wall);
-			}
-			else {
-				_gameGrid.setPosition(x * 32.0f, y * 32.0f);
-				_mainWindow.draw(_gameGrid);
-			}
+void	MySFML::drawBackground(const std::vector<std::pair<int, int>> &coords, int widthLimit, int heightLimit)
+{
+	for (auto tile: coords) {
+		if (tile.first == 0 || tile.first == widthLimit
+		|| tile.second == 32 || tile.second == heightLimit) {
+			_wallSprite.setPosition(tile.first, tile.second);
+			_window.draw(_wallSprite);
+		}
+		else {
+			_fieldSprite.setPosition(tile.first, tile.second);
+			_window.draw(_fieldSprite);
 		}
 	}
 }
 
-void	MySFML::_drawSnake(const MySnake &snakeDatas, int tileSize) {
-	auto	coords = snakeDatas.getCoords();
-	int		dir = static_cast<int>(snakeDatas.getDirection());
-
-	_snake.setTextureRect(sf::IntRect(dir * tileSize, 0, tileSize, tileSize));
-	_snake.setPosition(coords[0].first * tileSize, coords[0].second * tileSize);
-	_mainWindow.draw(_snake);
+void	MySFML::drawSnake(const std::vector<std::pair<int, int> > &coords, int direction)
+{
+	_snakeSprite.setTextureRect(sf::IntRect(direction * _tileSize, 0, _tileSize, _tileSize));
+	_snakeSprite.setPosition(coords[0].first, coords[0].second);
+	_window.draw(_snakeSprite);
+	_snakeSprite.setTextureRect(sf::IntRect(4 * _tileSize, 0, _tileSize, _tileSize));
 	for (size_t i = 1; i < coords.size(); i++) {
-		_snake.setTextureRect(sf::IntRect(4 * tileSize, 0, tileSize, tileSize));
-		_snake.setPosition(coords[i].first * tileSize, coords[i].second * tileSize);
-		_mainWindow.draw(_snake);
+		_snakeSprite.setPosition(coords[i].first, coords[i].second);
+		_window.draw(_snakeSprite);
 	}
 }
 
-void	MySFML::draw(MyContainers &game) {
-	// _drawMainWindow(game.getMainWindow());
-	_mainWindow.clear();
-	_drawGameGrid(game.getGameGrid());
-	_drawSnake(game.getSnake(), game.getGameGrid().getTileSize());
-	// _mainWindow.clear(sf::Color::Transparent);
-	// _mainWindow.draw(_gameGrid);
-	// _mainWindow.clear(sf::Color::Blue);
-	// _gameGrid.clear(sf::Color::Red);
-	_mainWindow.display();
-	// _gameGrid.display();
-}
+// void	MySFML::drawFruit(const std::vector<std::pair<int, int>> coords)
+// {
+// 	for (auto tile: coords) {
+// 		_fruitSprite.setPosition(tile.first, tile.second);
+// 		_window.draw(_fruitSprite);
+// 	}
+// }
 
-IMyLib	*createMyLib(void) {
-	return new MySFML;
+IMyLib	*createMyLib(int width, int height, int tileSize) {
+	return new MySFML(width, height, tileSize);
 }
 
 void	deleteMyLib(IMyLib *MySFML) {

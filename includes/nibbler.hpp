@@ -1,17 +1,24 @@
 #ifndef NIBBLER_HPP
 # define NIBBLER_HPP
 
-# include <iostream>
-# include <sstream>
-# include <stdexcept>
-// # include "Game.hpp"
-# include "enumTypes.hpp"
-
-constexpr int	NB_TILES_MIN { 10 };
+constexpr int	TILE_SIZE = 32;
+constexpr int	GAME_MIN_SIZE = 512;
+constexpr int	GAME_MAX_SIZE = 1024;
 constexpr auto	SFML { "libmysfml.dylib" };
 constexpr auto	OPENGL { "libmyopengl.dylib" };
 constexpr auto	SDL { "libmysdl.dylib" };
 
-// constexpr int	TILE_SIZE {0x20};
+enum class State {
+	RUNNING,
+	PAUSE,
+	OFF
+};
 
-#endif // NIBBLER_HPP
+namespace Difficulty {
+	static const float EASY = 2.0f;
+	static const float MEDIUM = 1.0f;
+	static const float HARD = 0.5f;
+}
+
+
+#endif

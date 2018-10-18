@@ -6,28 +6,20 @@ FLAGS	= -std=c++14 -Wall -Wextra -Werror
 CLASSES_D	= classes/
 HEADERS_D	= headers/
 OBJECTS_D	= objects/
-MYCONTAINERS_D	= ../MyContainers/
 DEP_D		= dependencies/
 INCLUDES_D	= ../includes/
 
-LIBS_SFML	= /Users/sle-lieg/.brew/Cellar/sfml/2.4.2_1/lib/libsfml-window.2.4.2.dylib
-LIBS_SFML	:= $(LIBS_SFML) /Users/sle-lieg/.brew/Cellar/sfml/2.4.2_1/lib/libsfml-graphics.2.4.2.dylib
-LIBS_SFML	:= $(LIBS_SFML) /Users/sle-lieg/.brew/Cellar/sfml/2.4.2_1/lib/libsfml-system.2.4.2.dylib
+LIBS_SFML	= -lsfml-window.2.4.2 -lsfml-graphics.2.4.2 -lsfml-system.2.4.2
 
 ############## MY_SFML ##############
 MYSFML_F	= MySFML.cpp
-MYSFML	= $(addprefix $(CLASSES_D), $(MYSFML_F))
-
-########### MYCONTAINERS ###########
-MYCONTAINERS_F	= MyWindow.cpp MyGameGrid.cpp MyContainers.cpp MySnake.cpp
-MYCONTAINERS	= $(addprefix $(MYCONTAINERS_D)$(CLASSES_D), $(MYCONTAINERS_F))
+# MYSFML	= $(addprefix $(CLASSES_D), $(MYSFML_F))
 
 ############## OBJECTS ##############
-# OBJECTS	= $(MYSFML:$(CLASSES_D)%.cpp=$(OBJECTS_D)%.o)
-OBJECTS	= $(MYSFML_F:%.cpp=$(OBJECTS_D)%.o)
-OBJECTS	:= $(OBJECTS) $(MYCONTAINERS_F:%.cpp=$(OBJECTS_D)%.o)
+# OBJECTS	= $(MYSFML_F:%.cpp=$(OBJECTS_D)%.o)
+OBJECTS	= $(MYSFML_F:%.cpp=%.o)
 
-DEPENDENCIES = $(OBJECTS:$(OBJECTS_D)%.o=$(DEP_D)%.d)
+DEPENDENCIES = $(OBJECTS:%.o=$(DEP_D)%.d)
 
 all: createDir $(DYLIB)
 
@@ -38,13 +30,10 @@ createDir:
 -include $(DEPENDENCIES)
 
 $(DYLIB): $(OBJECTS)
-	$(CC) -shared -fPIC $^ $(LIBS_SFML) -o $@
+	$(CC) -shared -fPIC $(addprefix $(OBJECTS_D), $^) $(LIBS_SFML) -o $@
 
-$(OBJECTS_D)%.o: $(CLASSES_D)%.cpp
-	$(CC) $(FLAGS) -MMD -MF $(DEP_D)$(@F:%.o=%.d) -c $< -o $@ -I$(INCLUDES_D)
-
-$(OBJECTS_D)%.o: $(MYCONTAINERS_D)$(CLASSES_D)%.cpp
-	$(CC) $(FLAGS) -MMD -MF $(DEP_D)$(@F:%.o=%.d) -c $< -o $@ -I$(INCLUDES_D)
+%.o: $(CLASSES_D)%.cpp
+	$(CC) $(FLAGS) -MMD -MF $(DEP_D)$(@F:%.o=%.d) -c $< -o $(OBJECTS_D)$@ -I$(INCLUDES_D) -I$(HEADERS_D)
 
 clean:
 	rm -f $(OBJECTS)
