@@ -8,6 +8,7 @@
 # include "AGameEntity.hpp"
 # include "GameGrid.hpp"
 # include "Snake.hpp"
+# include "Fruit.hpp"
 # include "Clock.hpp"
 # include "IMyLib.hpp"
 # include "MySFML.hpp"
@@ -19,15 +20,14 @@ private:
 	State		_state;
 	Clock		_clock;
 	float		_speed;
-	Direction	_direction;
 	int			_gameWidth;
 	int			_gameHeight;
 
 	// GAME ELEMENTS
-	std::unique_ptr<AGameEntity>	_gameGrid;
-	std::unique_ptr<AGameEntity>	_snake;
-	// std::unique_ptr<AGameEntity>	_fruit;
-	// std::unique_ptr<AGameEntity>	_hud;
+	std::unique_ptr<GameGrid>	_gameGrid;
+	std::unique_ptr<Snake>		_snake;
+	std::unique_ptr<Fruit>		_fruit;
+	// std::unique_ptr<Hud>	_hud;
 
 	// DYLIB ELEMENTS
 	void	*_dl_handle;
@@ -57,6 +57,7 @@ public:
 	void	start(void);
 	bool	isOpen(void) const;
 	void	handleInputs(void);
+	void	update(void);
 	void	drawGame(void) const;
 };
 

@@ -23,7 +23,7 @@ INCLUDES	:= $(INCLUDES) -I$(MY_SFML_PATH)$(HEADERS_D)
 
 ############## SOURCES ##############
 SOURCES_F	= main.cpp
-CLASSES_F	= Game.cpp Clock.cpp GameGrid.cpp Snake.cpp AGameEntity.cpp
+CLASSES_F	= Game.cpp Clock.cpp GameGrid.cpp Snake.cpp AGameEntity.cpp Fruit.cpp
 
 # SOURCES	= $(addprefix $(SOURCES_D), $(SOURCES_F))
 # CLASSES	= $(addprefix $(CLASSES_D), $(CLASSES_F))

@@ -5,13 +5,15 @@ MySFML::MySFML(int width, int height, int tileSize) :
 {
 	_window.create(sf::VideoMode(width , height), "mainWin", sf::Style::Default);
 	
-	_fieldTexture.loadFromFile("dylibs/textures/myTileSet.png", sf::IntRect(96, 0, 32, 32));
-	_wallTexture.loadFromFile("dylibs/textures/myTileSet.png", sf::IntRect(64, 0, 32, 32));
+	_fieldTexture.loadFromFile("dylibs/textures/myTileSet.png", sf::IntRect(tileSize * 3, 0, tileSize, tileSize));
+	_wallTexture.loadFromFile("dylibs/textures/myTileSet.png", sf::IntRect(tileSize * 2, 0, tileSize, tileSize));
 	_snakeTexture.loadFromFile("dylibs/textures/snake.png");
+	_fruitTexture.loadFromFile("dylibs/textures/myTileSet.png", sf::IntRect(0, tileSize, tileSize, tileSize));
 
 	_fieldSprite.setTexture(_fieldTexture);
 	_wallSprite.setTexture(_wallTexture);
 	_snakeSprite.setTexture(_snakeTexture);
+	_fruitSprite.setTexture(_fruitTexture);
 }
 
 MySFML::~MySFML(void) {}
@@ -36,13 +38,13 @@ Inputs	MySFML::getInput(void) {
 						return Inputs::PAUSE;
 						break;
 					case sf::Keyboard::Num1:
-						return Inputs::LIB_1;
+						return Inputs::SFML;
 						break;
 					case sf::Keyboard::Num2:
-						return Inputs::LIB_2;
+						return Inputs::OPENGL;
 						break;
 					case sf::Keyboard::Num3:
-						return Inputs::LIB_3;
+						return Inputs::SDL;
 						break;
 					default:
 						break;
@@ -72,9 +74,11 @@ void	MySFML::drawBackground(const std::vector<std::pair<int, int>> &coords, int 
 
 void	MySFML::drawSnake(const std::vector<std::pair<int, int> > &coords, int direction)
 {
+	// draw head
 	_snakeSprite.setTextureRect(sf::IntRect(direction * _tileSize, 0, _tileSize, _tileSize));
 	_snakeSprite.setPosition(coords[0].first, coords[0].second);
 	_window.draw(_snakeSprite);
+	// draw body
 	_snakeSprite.setTextureRect(sf::IntRect(4 * _tileSize, 0, _tileSize, _tileSize));
 	for (size_t i = 1; i < coords.size(); i++) {
 		_snakeSprite.setPosition(coords[i].first, coords[i].second);
@@ -82,13 +86,13 @@ void	MySFML::drawSnake(const std::vector<std::pair<int, int> > &coords, int dire
 	}
 }
 
-// void	MySFML::drawFruit(const std::vector<std::pair<int, int>> coords)
-// {
-// 	for (auto tile: coords) {
-// 		_fruitSprite.setPosition(tile.first, tile.second);
-// 		_window.draw(_fruitSprite);
-// 	}
-// }
+void	MySFML::drawFruit(const std::vector<std::pair<int, int>> &coords)
+{
+	for (auto tile: coords) {
+		_fruitSprite.setPosition(tile.first, tile.second);
+		_window.draw(_fruitSprite);
+	}
+}
 
 void	MySFML::clearScreen(void)
 {

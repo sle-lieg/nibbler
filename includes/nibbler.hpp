@@ -8,12 +8,7 @@ constexpr int	GAME_MAX_SIZE = 1024;
 // constexpr auto	OPENGL = "libmyopengl.dylib";
 // constexpr auto	SDL = "libmysdl.dylib";
 
-const char *LIBS[] = {
-	"",
-	"libmysfml.dylib",
-	"libmyopengl.dylib",
-	"libmysdl.dylib"
-};
+extern const char *LIBS[];
 
 enum class State {
 	RUNNING,
@@ -29,9 +24,9 @@ enum class Direction {
 };
 
 namespace Difficulty {
-	static const float EASY = 2.0f;
-	static const float MEDIUM = 1.0f;
-	static const float HARD = 0.5f;
+	static const float EASY = 0.5f;
+	static const float MEDIUM = 0.5f;
+	static const float HARD = 0.3f;
 }
 
 

@@ -1,6 +1,13 @@
 #include "nibbler.hpp"
 #include "Game.hpp"
 
+const char *LIBS[] = {
+	"",
+	"libmysfml.dylib",
+	"libmyopengl.dylib",
+	"libmysdl.dylib"
+};
+
 int main(int ac, char **av) {
 	Game	game(ac, av);
 
@@ -8,7 +15,7 @@ int main(int ac, char **av) {
 	game.start();
 	while (game.isOpen()) {
 		game.handleInputs();
-		// game.update();
+		game.update();
 		game.drawGame();
 	}
 }

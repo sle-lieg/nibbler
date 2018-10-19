@@ -9,16 +9,20 @@ private:
 	Direction _currentDirection;
 	Direction _newDirection;
 
+	Snake();
+	Snake(const Snake &);
+	Snake &operator=(const Snake &);
 public:
 	Snake(int snakeHeadX, int snakeHeadY);
 	virtual ~Snake( void );
 
-	Direction	getCurrentDirection(void) const;
-	Direction	getNewDirection(void) const;
+	int		getCurrentDirection(void) const;
+	int		getNewDirection(void) const;
 
-	void	setCurrentDirection(void);
-	void	setNewDirection(void);
+	void	setCurrentDirection(int dir);
+	void	setNewDirection(int dir);
 
+	void	move(void);
 };
 
 #endif

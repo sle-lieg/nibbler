@@ -13,10 +13,12 @@ private:
 	sf::Sprite	_fieldSprite;
 	sf::Sprite	_wallSprite;
 	sf::Sprite	_snakeSprite;
+	sf::Sprite	_fruitSprite;
 
 	sf::Texture	_fieldTexture;
 	sf::Texture	_wallTexture;
 	sf::Texture	_snakeTexture;
+	sf::Texture	_fruitTexture;
 
 	const int	_tileSize;
 
@@ -30,7 +32,7 @@ public:
 	// void	initGraphicLibObjects(int width, int height);
 	void	drawBackground(const std::vector<std::pair<int, int>> &coords, int widthLimit, int heightLimit);
 	void	drawSnake(const std::vector<std::pair<int, int>> &coords, int direction);
-	// void	drawFruit(const std::vector<std::pair<int, int>> &coords);
+	void	drawFruit(const std::vector<std::pair<int, int>> &coords);
 
 	void	clearScreen(void);
 	void	displayScreen(void);

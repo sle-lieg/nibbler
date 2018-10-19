@@ -2,7 +2,7 @@
 #include <sstream>
 
 Game::Game(int ac, char **av) :
-	_state{State::PAUSE}, _clock{}, _speed{Difficulty::EASY}, _direction{Direction::LEFT}
+	_state{State::PAUSE}, _clock{}, _speed{Difficulty::EASY}
 {
 	std::cout << "Game initialized." << std::endl;
 	if (ac != 3)
@@ -43,9 +43,7 @@ void	Game::_initGameElements(void)
 	int snakeHeadX = (_gameHeight / 2) & ~(TILE_SIZE - 1);
 	_snake = std::make_unique<Snake>(snakeHeadX, snakeHeadY);
 
-	// _fruit = std::make_unique<Fruit>();
-	// _fruit->addCoord(_generateRandomCoord());
-
+	_fruit = std::make_unique<Fruit>();
 }
 
 void	Game::start(void)
@@ -68,6 +66,7 @@ void	Game::handleInputs(void) {
 		case Inputs::OPENGL:
 		case Inputs::SDL:
 			_switchLibrary(input);
+			break;
 		case Inputs::LEFT:
 		case Inputs::RIGHT:
 			_switchDirection(input);
@@ -85,24 +84,46 @@ void	Game::handleInputs(void) {
 
 void	Game::_switchDirection(Inputs input)
 {
-	int dir = _snake.getCurrentDirection();
+	// int curDir = _snake->getCurrentDirection();
+	// int newDir = _snake->getNewDirection();
+	int dir = _snake->getCurrentDirection();
+	std::cout << "Switching direction" << std::endl;
 
 	if (input == Inputs::LEFT)
-		--dir;
-	else if (input == Inputs::RIGHT)
 		++dir;
-	dir %= 4;
-	_snake.setNewDirection(dir);
+	else if (input == Inputs::RIGHT)
+		--dir;
+	dir = dir < 0 ? 3 : dir % 4;
+	_snake->setNewDirection(dir);
 }
 
+void	Game::_quitGame()
+{
+	std::cout << "Quit game" << std::endl;
+	_state = State::OFF;
+}
+
+void	Game::_pauseGame()
+{
+	if (_state == State::RUNNING)
+	{
+		std::cout << "Pause game" << std::endl;
+		_state = State::PAUSE;
+	}
+	else
+	{
+		std::cout << "Resume game" << std::endl;
+		_state = State::RUNNING;
+		_clock.reset();
+	}
+}
 
 void	Game::drawGame(void) const
 {
 	_dylib->clearScreen();
 	_dylib->drawBackground(_gameGrid->getCoords(), _gameWidth - TILE_SIZE, _gameHeight - TILE_SIZE);
-	_dylib->drawSnake(_snake->getCoords(), _snake.getNewDirection());
-	// _dylib->drawSnake(_snake->getCoords(), static_cast<int>(_direction));
-	// _dylib->drawFruit(_fruit.getCoords());
+	_dylib->drawSnake(_snake->getCoords(), _snake->getCurrentDirection());
+	_dylib->drawFruit(_fruit->getCoords());
 	_dylib->displayScreen();
 }
 
@@ -113,6 +134,25 @@ void	Game::_usage(void) const
 	std::cout << "	`height`: minimum game height: [\033[1;32m" << GAME_MAX_SIZE << "\033[0m]" << std::endl;
 	exit(EXIT_FAILURE);
 }
+
+//######################################################################
+//############################ UPDATE GAME ############################
+//######################################################################
+
+void	Game::update(void)
+{
+	float elapsed = _clock.getElapsedTime();
+
+	if (elapsed > _speed) {
+		_snake->move();
+		// _checkCollisions();
+		_clock.reset();
+	}
+}
+
+//######################################################################
+//######################################################################
+//######################################################################
 
 //######################################################################
 //########################### LIB MANAGEMENT ###########################
