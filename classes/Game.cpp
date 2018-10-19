@@ -23,7 +23,7 @@ Game::Game(int ac, char **av) :
 	|| _gameHeight < GAME_MIN_SIZE || _gameHeight > GAME_MAX_SIZE)
 		_usage();
 
-	_openLibrary(SFML);
+	_openLibrary(LIBS[static_cast<int>(Inputs::SFML)]);
 	_initGameElements();
 }
 
@@ -31,25 +31,21 @@ Game::~Game(void)
 {
 	_gameGrid.reset(nullptr);
 	_snake.reset(nullptr);
-	_fruit.reset(nullptr);
+	// _fruit.reset(nullptr);
 	_closeLibrary();
 }
 
 void	Game::_initGameElements(void)
 {
-	_gameGrid = std::make_unique<GameEntity>();
-	for (int y = 0; y < _gameHeight; y += TILE_SIZE) {
-		for (int x = 0; x < _gameWidth; x += TILE_SIZE) {
-			_gameGrid->addCoord(x, y);
-		}
-	}
-	_snake = std::make_unique<GameEntity>();
+	_gameGrid = std::make_unique<GameGrid>(_gameWidth, _gameHeight);
+
 	int snakeHeadY = (_gameWidth / 2) & ~(TILE_SIZE - 1);
 	int snakeHeadX = (_gameHeight / 2) & ~(TILE_SIZE - 1);
-	for (int i = 0; i < 4; i++)
-		_snake->addCoord(snakeHeadX + TILE_SIZE * i, snakeHeadY);
-	// _fruit = std::make_unique<GameEntity>();
+	_snake = std::make_unique<Snake>(snakeHeadX, snakeHeadY);
+
+	// _fruit = std::make_unique<Fruit>();
 	// _fruit->addCoord(_generateRandomCoord());
+
 }
 
 void	Game::start(void)
@@ -65,33 +61,35 @@ bool	Game::isOpen(void) const {
 }
 
 void	Game::handleInputs(void) {
-	// Inputs input = _myLib->getInput();
+	Inputs input = _dylib->getInput();
 
-	// switch (input) {
-	// 	// case Inputs::LIB_1:
-	// 	// case Inputs::LIB_2:
-	// 	// case Inputs::LIB_3:
-	// 	// 	_switchLibrary(input);
-	// 	case Inputs::LEFT:
-	// 	case Inputs::RIGHT:
-	// 		_switchDirection(input);
-	// 		break;
-	// 	// case Inputs::ESC:
-	// 	// 	_quitGame();
-	// 	// 	break;
-	// 	// case Inputs::PAUSE:
-	// 	// 	_pauseGame();
-	// 	// 	break;
-	// 	default:
-	// 		break;
-	// }
+	switch (input) {
+		case Inputs::SFML:
+		case Inputs::OPENGL:
+		case Inputs::SDL:
+			_switchLibrary(input);
+		case Inputs::LEFT:
+		case Inputs::RIGHT:
+			_switchDirection(input);
+			break;
+		case Inputs::ESC:
+			_quitGame();
+			break;
+		case Inputs::PAUSE:
+			_pauseGame();
+			break;
+		default:
+			break;
+	}
 }
 
 void	Game::drawGame(void) const
 {
+	_dylib->clearScreen();
 	_dylib->drawBackground(_gameGrid->getCoords(), _gameWidth - TILE_SIZE, _gameHeight - TILE_SIZE);
 	_dylib->drawSnake(_snake->getCoords(), _direction);
 	// _dylib->drawFruit(_fruit.getCoords());
+	_dylib->displayScreen();
 }
 
 void	Game::_usage(void) const
@@ -125,8 +123,8 @@ void	Game::_closeLibrary()
 
 		if (!(deleteMyLib = (MyLibDeleter*)dlsym(_dl_handle, "deleteMyLib")))
 			_dlerrorWrapper();
-		deleteMyLib(_myLib);
-		_myLib = nullptr;
+		deleteMyLib(_dylib);
+		_dylib = nullptr;
 		_dl_handle = nullptr;
 	}
 }
@@ -135,6 +133,19 @@ void	Game::_dlerrorWrapper() const
 {
 	std::cerr << "Error: " << dlerror() << std::endl;
 	exit(EXIT_FAILURE);
+}
+
+void	Game::_switchLibrary(Inputs input)
+{
+	std::cout << "Switching library: " << LIBS[(int)input] << std::endl;
+	// if (_currentLibrary != input)
+	// {
+	// 	const char *libraryToOpen = LIBS[static_cast<int>(input)];
+
+	// 	_currentLibrary = input;
+	// 	_closeLibrary();
+	// 	_openLibrary(libraryToOpen);
+	// }
 }
 
 //######################################################################

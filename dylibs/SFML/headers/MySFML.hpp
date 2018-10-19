@@ -32,12 +32,13 @@ public:
 	void	drawSnake(const std::vector<std::pair<int, int>> &coords, int direction);
 	// void	drawFruit(const std::vector<std::pair<int, int>> &coords);
 
-	// void	createWindow(int width, int height);
+	void	clearScreen(void);
+	void	displayScreen(void);
 	Inputs	getInput(void);
 };
 
-extern "C"	IMyLib *createMyLib(int, int);
-typedef IMyLib *MyLibCreator(int, int);
+extern "C"	IMyLib *createMyLib(int, int, int);
+typedef IMyLib *MyLibCreator(int, int, int);
 
 extern "C" void	deleteMyLib(IMyLib *);
 typedef void	MyLibDeleter(IMyLib *);

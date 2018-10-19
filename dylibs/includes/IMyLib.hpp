@@ -4,14 +4,14 @@
 # include <iostream>
 
 enum class Inputs : int {
-	DEFAULT,
+	DEFAULT = 0,
+	SFML,
+	OPENGL,
+	SDL,
 	LEFT,
 	RIGHT,
 	ESC,
-	PAUSE,
-	LIB_1,
-	LIB_2,
-	LIB_3
+	PAUSE
 };
 
 class IMyLib
@@ -22,6 +22,8 @@ public:
 	virtual void	drawBackground(const std::vector<std::pair<int, int>> &coords, int widthLimit, int heightLimit) = 0;
 	virtual void	drawSnake(const std::vector<std::pair<int, int> > &coords, int direction) = 0;
 	// virtual void	drawFruit(const std::vector<std::pair<int, int> > coords) = 0;
+	virtual void	clearScreen(void) = 0;
+	virtual void	displayScreen(void) = 0;
 	virtual Inputs	getInput(void) = 0;
 
 	// virtual void	createWindow(int width, int height) = 0;

@@ -4,9 +4,16 @@
 constexpr int	TILE_SIZE = 32;
 constexpr int	GAME_MIN_SIZE = 512;
 constexpr int	GAME_MAX_SIZE = 1024;
-constexpr auto	SFML { "libmysfml.dylib" };
-constexpr auto	OPENGL { "libmyopengl.dylib" };
-constexpr auto	SDL { "libmysdl.dylib" };
+// constexpr auto	SFML = "libmysfml.dylib";
+// constexpr auto	OPENGL = "libmyopengl.dylib";
+// constexpr auto	SDL = "libmysdl.dylib";
+
+const char *LIBS[] = {
+	"",
+	"libmysfml.dylib",
+	"libmyopengl.dylib",
+	"libmysdl.dylib"
+};
 
 enum class State {
 	RUNNING,
@@ -19,6 +26,5 @@ namespace Difficulty {
 	static const float MEDIUM = 1.0f;
 	static const float HARD = 0.5f;
 }
-
 
 #endif

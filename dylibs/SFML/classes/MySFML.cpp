@@ -16,23 +16,6 @@ MySFML::MySFML(int width, int height, int tileSize) :
 
 MySFML::~MySFML(void) {}
 
-// void	MySFML::initGraphicLibObjects(int width, int height) {
-// 	_window.create(sf::VideoMode(width , height), "mainWin", sf::Style::Default);
-	
-// 	_fieldTexture.loadFromFile("dylibs/textures/myTileSet.png", sf::IntRect(96, 0, 32, 32));
-// 	_wallTexture.loadFromFile("dylibs/textures/myTileSet.png", sf::IntRect(64, 0, 32, 32));
-// 	_snakeTexture.loadFromFile("dylibs/textures/snake.png");
-
-// 	_fieldSprite.setTexture(_fieldTexture);
-// 	_wallSprite.setTexture(_wallTexture);
-// 	_snakeSprite.setTexture(_snakeTexture);
-// }
-
-
-// void	MySFML::createWindow(int width, int height) {
-// 	_window.create(sf::VideoMode(width, height), "myWin", sf::Style::Default);
-// }
-
 Inputs	MySFML::getInput(void) {
 	sf::Event event;
 
@@ -106,6 +89,17 @@ void	MySFML::drawSnake(const std::vector<std::pair<int, int> > &coords, int dire
 // 		_window.draw(_fruitSprite);
 // 	}
 // }
+
+void	MySFML::clearScreen(void)
+{
+	_window.clear();
+}
+
+void	MySFML::displayScreen(void)
+{
+	_window.display();
+}
+
 
 IMyLib	*createMyLib(int width, int height, int tileSize) {
 	return new MySFML(width, height, tileSize);

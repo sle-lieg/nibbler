@@ -1,7 +1,7 @@
 EXEC	= nibbler
 SFML	= libmysfml.dylib
 CC		= clang++
-FLAGS	= -std=c++14 -Wall -Wextra -Werror
+FLAGS	= -std=c++14 -Wall -Wextra -Werror -g
 
 ############ DIRECTORIES ############
 SOURCES_D	= sources/
@@ -18,10 +18,12 @@ MY_SFML_PATH	= dylibs/SFML/
 MY_SDL_PATH		= dylibs/SDL/
 
 INCLUDES	= -I$(INCLUDES_D) -I$(HEADERS_D) -I$(DYLIBS_D)$(INCLUDES_D)
+INCLUDES	:= $(INCLUDES) -I$(MY_SFML_PATH)$(HEADERS_D)
+
 
 ############## SOURCES ##############
 SOURCES_F	= main.cpp
-CLASSES_F	= Game.cpp
+CLASSES_F	= Game.cpp Clock.cpp GameGrid.cpp Snake.cpp AGameEntity.cpp
 
 # SOURCES	= $(addprefix $(SOURCES_D), $(SOURCES_F))
 # CLASSES	= $(addprefix $(CLASSES_D), $(CLASSES_F))

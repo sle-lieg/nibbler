@@ -5,9 +5,13 @@
 # include <dlfcn.h>
 # include <memory.h>
 # include "nibbler.hpp"
-# include "GameEntity.hpp"
+# include "AGameEntity.hpp"
+# include "GameGrid.hpp"
+# include "Snake.hpp"
 # include "Clock.hpp"
 # include "IMyLib.hpp"
+# include "MySFML.hpp"
+
 
 class Game
 {
@@ -20,20 +24,28 @@ private:
 	int			_direction;
 
 	// GAME ELEMENTS
-	std::unique_ptr<GameEntity>	_gameGrid;
-	std::unique_ptr<GameEntity>	_snake;
-	std::unique_ptr<GameEntity>	_fruit;
+	std::unique_ptr<AGameEntity>	_gameGrid;
+	std::unique_ptr<AGameEntity>	_snake;
+	// std::unique_ptr<AGameEntity>	_fruit;
+	// std::unique_ptr<AGameEntity>	_hud;
 
 	// DYLIB ELEMENTS
 	void	*_dl_handle;
 	IMyLib	*_dylib;
+	Inputs	_currentLibrary;
 
-
-	void	_usage(void) const;
+	// DYLIB FUNCTIONS
 	void	_openLibrary(const char *lib);
 	void	_closeLibrary(void);
 	void	_dlerrorWrapper() const;
+	void	_switchLibrary(Inputs input);
+
+	void	_switchDirection(Inputs input);
+	void	_quitGame();
+	void	_pauseGame();
+
 	void	_initGameElements(void);
+	void	_usage(void) const;
 
 	Game( void );
 	Game(Game const &);

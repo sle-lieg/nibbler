@@ -1,6 +1,6 @@
 DYLIB	= libmysfml.dylib
 CC		= clang++
-FLAGS	= -std=c++14 -Wall -Wextra -Werror
+FLAGS	= -std=c++14 -Wall -Wextra -Werror -g
 
 ############ DIRECTORIES ############
 CLASSES_D	= classes/

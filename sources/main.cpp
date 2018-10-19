@@ -7,7 +7,7 @@ int main(int ac, char **av) {
 	// game.displayMenu();
 	game.start();
 	while (game.isOpen()) {
-		// game.handleInputs();
+		game.handleInputs();
 		// game.update();
 		game.drawGame();
 	}
