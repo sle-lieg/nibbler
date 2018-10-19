@@ -2,7 +2,7 @@
 #include <sstream>
 
 Game::Game(int ac, char **av) :
-	_state{State::PAUSE}, _clock{}, _speed{Difficulty::EASY}
+	_state{State::PAUSE}, _clock{}, _speed{Difficulty::EASY}, _direction{Direction::LEFT}
 {
 	std::cout << "Game initialized." << std::endl;
 	if (ac != 3)
@@ -83,11 +83,25 @@ void	Game::handleInputs(void) {
 	}
 }
 
+void	Game::_switchDirection(Inputs input)
+{
+	int dir = _snake.getCurrentDirection();
+
+	if (input == Inputs::LEFT)
+		--dir;
+	else if (input == Inputs::RIGHT)
+		++dir;
+	dir %= 4;
+	_snake.setNewDirection(dir);
+}
+
+
 void	Game::drawGame(void) const
 {
 	_dylib->clearScreen();
 	_dylib->drawBackground(_gameGrid->getCoords(), _gameWidth - TILE_SIZE, _gameHeight - TILE_SIZE);
-	_dylib->drawSnake(_snake->getCoords(), _direction);
+	_dylib->drawSnake(_snake->getCoords(), _snake.getNewDirection());
+	// _dylib->drawSnake(_snake->getCoords(), static_cast<int>(_direction));
 	// _dylib->drawFruit(_fruit.getCoords());
 	_dylib->displayScreen();
 }

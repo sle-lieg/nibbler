@@ -19,9 +19,9 @@ private:
 	State		_state;
 	Clock		_clock;
 	float		_speed;
+	Direction	_direction;
 	int			_gameWidth;
 	int			_gameHeight;
-	int			_direction;
 
 	// GAME ELEMENTS
 	std::unique_ptr<AGameEntity>	_gameGrid;

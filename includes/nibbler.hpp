@@ -21,10 +21,18 @@ enum class State {
 	OFF
 };
 
+enum class Direction {
+	UP,
+	LEFT,
+	DOWN,
+	RIGHT
+};
+
 namespace Difficulty {
 	static const float EASY = 2.0f;
 	static const float MEDIUM = 1.0f;
 	static const float HARD = 0.5f;
 }
+
 
 #endif
