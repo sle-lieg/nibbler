@@ -1,6 +1,9 @@
 #ifndef NIBBLER_HPP
 # define NIBBLER_HPP
 
+extern int g_gameWidth;
+extern int g_gameHeight;
+
 constexpr int	TILE_SIZE = 32;
 constexpr int	GAME_MIN_SIZE = 512;
 constexpr int	GAME_MAX_SIZE = 1024;

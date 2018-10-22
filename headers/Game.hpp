@@ -13,15 +13,14 @@
 # include "IMyLib.hpp"
 # include "MySFML.hpp"
 
-
 class Game
 {
 private:
 	State		_state;
 	Clock		_clock;
 	float		_speed;
-	int			_gameWidth;
-	int			_gameHeight;
+	// int			_gameWidth;
+	// int			_gameHeight;
 
 	// GAME ELEMENTS
 	std::unique_ptr<GameGrid>	_gameGrid;

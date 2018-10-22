@@ -2,7 +2,7 @@
 #include <sstream>
 
 Game::Game(int ac, char **av) :
-	_state{State::PAUSE}, _clock{}, _speed{Difficulty::EASY}
+	_state{State::PAUSE}, _clock{}, _speed{Difficulty::HARD}
 {
 	std::cout << "Game initialized." << std::endl;
 	if (ac != 3)
@@ -17,11 +17,16 @@ Game::Game(int ac, char **av) :
 	} catch (const std::stringstream::failure &e) {
 		_usage();
 	}
-	_gameWidth = width & ~(TILE_SIZE - 1);
-	_gameHeight = height & ~(TILE_SIZE - 1);
-	if (_gameWidth < GAME_MIN_SIZE || _gameWidth > GAME_MAX_SIZE
-	|| _gameHeight < GAME_MIN_SIZE || _gameHeight > GAME_MAX_SIZE)
+	g_gameWidth = width & ~(TILE_SIZE - 1);
+	g_gameHeight = height & ~(TILE_SIZE - 1);
+	// _gameWidth = width & ~(TILE_SIZE - 1);
+	// _gameHeight = height & ~(TILE_SIZE - 1);
+	if (g_gameWidth < GAME_MIN_SIZE || g_gameWidth > GAME_MAX_SIZE
+	|| g_gameHeight < GAME_MIN_SIZE || g_gameHeight > GAME_MAX_SIZE)
 		_usage();
+	// if (_gameWidth < GAME_MIN_SIZE || _gameWidth > GAME_MAX_SIZE
+	// || _gameHeight < GAME_MIN_SIZE || _gameHeight > GAME_MAX_SIZE)
+	// 	_usage();
 
 	_openLibrary(LIBS[static_cast<int>(Inputs::SFML)]);
 	_initGameElements();
@@ -37,10 +42,13 @@ Game::~Game(void)
 
 void	Game::_initGameElements(void)
 {
-	_gameGrid = std::make_unique<GameGrid>(_gameWidth, _gameHeight);
+	// _gameGrid = std::make_unique<GameGrid>(_gameWidth, _gameHeight);
+	_gameGrid = std::make_unique<GameGrid>();
 
-	int snakeHeadY = (_gameWidth / 2) & ~(TILE_SIZE - 1);
-	int snakeHeadX = (_gameHeight / 2) & ~(TILE_SIZE - 1);
+	// int snakeHeadY = (_gameWidth / 2) & ~(TILE_SIZE - 1);
+	// int snakeHeadX = (_gameHeight / 2) & ~(TILE_SIZE - 1);
+	int snakeHeadY = (g_gameWidth / 2) & ~(TILE_SIZE - 1);
+	int snakeHeadX = (g_gameHeight / 2) & ~(TILE_SIZE - 1);
 	_snake = std::make_unique<Snake>(snakeHeadX, snakeHeadY);
 
 	_fruit = std::make_unique<Fruit>();
@@ -84,8 +92,6 @@ void	Game::handleInputs(void) {
 
 void	Game::_switchDirection(Inputs input)
 {
-	// int curDir = _snake->getCurrentDirection();
-	// int newDir = _snake->getNewDirection();
 	int dir = _snake->getCurrentDirection();
 	std::cout << "Switching direction" << std::endl;
 
@@ -121,7 +127,7 @@ void	Game::_pauseGame()
 void	Game::drawGame(void) const
 {
 	_dylib->clearScreen();
-	_dylib->drawBackground(_gameGrid->getCoords(), _gameWidth - TILE_SIZE, _gameHeight - TILE_SIZE);
+	_dylib->drawBackground(_gameGrid->getCoords(), g_gameWidth - TILE_SIZE, g_gameHeight - TILE_SIZE);
 	_dylib->drawSnake(_snake->getCoords(), _snake->getCurrentDirection());
 	_dylib->drawFruit(_fruit->getCoords());
 	_dylib->displayScreen();
@@ -145,7 +151,24 @@ void	Game::update(void)
 
 	if (elapsed > _speed) {
 		_snake->move();
-		// _checkCollisions();
+		// if (_snake->checkCollision(_gameWidth - TILE_SIZE, _gameHeight - TILE_SIZE))
+		// {
+		// 	_state = State::OFF;
+		// 	// _showMenu();
+		// }
+		if (_snake->checkCollision())
+		{
+			_state = State::OFF;
+			// _showMenu();
+		}
+		if (_snake->hasEaten())
+			_snake->digest();
+		if (_snake->checkCollision(_fruit->getCoords().front()))
+		{
+			_snake->eatFruit();
+			_score += 100;
+			_fruit->popRandom(_snake->getCoords());
+		}
 		_clock.reset();
 	}
 }
@@ -167,7 +190,7 @@ void	Game::_openLibrary(const char *lib)
 	if (!(createMyLib = (MyLibCreator*)dlsym(_dl_handle, "createMyLib")))
 		_dlerrorWrapper();
 
-	_dylib = createMyLib(_gameWidth, _gameHeight, TILE_SIZE);
+	_dylib = createMyLib(g_gameWidth, g_gameHeight, TILE_SIZE);
 }
 
 void	Game::_closeLibrary()

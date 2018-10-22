@@ -6,7 +6,8 @@
 class GameGrid : public AGameEntity
 {
 public:
-	GameGrid(int width, int height);
+	// GameGrid(int width, int height);
+	GameGrid(void);
 	virtual ~GameGrid(void);
 };
 

@@ -1,6 +1,9 @@
 #include "nibbler.hpp"
 #include "Game.hpp"
 
+int g_gameWidth = 0;
+int g_gameHeight = 0;
+
 const char *LIBS[] = {
 	"",
 	"libmysfml.dylib",
