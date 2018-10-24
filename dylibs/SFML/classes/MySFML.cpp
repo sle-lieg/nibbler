@@ -14,6 +14,18 @@ MySFML::MySFML(int width, int height, int tileSize) :
 	_wallSprite.setTexture(_wallTexture);
 	_snakeSprite.setTexture(_snakeTexture);
 	_fruitSprite.setTexture(_fruitTexture);
+
+	if (!(_font.loadFromFile("/System/Library/Fonts/Courier.dfont")))
+	{
+		std::cout << "Error: wrong font path" << std::endl;
+		exit(EXIT_FAILURE);
+	}
+	_hud.setFont(_font);
+	_hud.setCharacterSize(24);
+	_hud.setOutlineColor(sf::Color::Red);
+	_hud.setStyle(sf::Text::Bold | sf::Text::Underlined);
+	_hud.setPosition(0.0f, 0.0f);
+	_hud.setFillColor(sf::Color::White);
 }
 
 MySFML::~MySFML(void) {}
@@ -93,6 +105,17 @@ void	MySFML::drawFruit(const std::vector<std::pair<int, int>> &coords)
 		_window.draw(_fruitSprite);
 	}
 }
+
+void	MySFML::drawHud(int score, int nbFruits, int lvl)
+{
+	std::stringstream ss;
+	ss << "Score: " << score << " Fruits: " << nbFruits << " Level: " << lvl;
+
+	// _hud.setString(L"Hello");
+	_hud.setString(ss.str());
+	_window.draw(_hud);
+}
+
 
 void	MySFML::clearScreen(void)
 {

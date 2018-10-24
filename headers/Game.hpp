@@ -19,6 +19,9 @@ private:
 	State		_state;
 	Clock		_clock;
 	float		_speed;
+	int			_speedFactor;
+	int			_score;
+	
 	// int			_gameWidth;
 	// int			_gameHeight;
 

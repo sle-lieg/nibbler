@@ -7,6 +7,7 @@ extern int g_gameHeight;
 constexpr int	TILE_SIZE = 32;
 constexpr int	GAME_MIN_SIZE = 512;
 constexpr int	GAME_MAX_SIZE = 1024;
+constexpr float	SPEED_PER_LVL = 0.10f;
 // constexpr auto	SFML = "libmysfml.dylib";
 // constexpr auto	OPENGL = "libmyopengl.dylib";
 // constexpr auto	SDL = "libmysdl.dylib";

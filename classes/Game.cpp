@@ -2,7 +2,8 @@
 #include <sstream>
 
 Game::Game(int ac, char **av) :
-	_state{State::PAUSE}, _clock{}, _speed{Difficulty::HARD}
+	_state{State::PAUSE}, _clock{}, _speed{Difficulty::HARD}, _speedFactor{1},
+	_score{0}
 {
 	std::cout << "Game initialized." << std::endl;
 	if (ac != 3)
@@ -130,6 +131,7 @@ void	Game::drawGame(void) const
 	_dylib->drawBackground(_gameGrid->getCoords(), g_gameWidth - TILE_SIZE, g_gameHeight - TILE_SIZE);
 	_dylib->drawSnake(_snake->getCoords(), _snake->getCurrentDirection());
 	_dylib->drawFruit(_fruit->getCoords());
+	_dylib->drawHud(_score, _snake->getNbFruitEaten(), _speedFactor);
 	_dylib->displayScreen();
 }
 
@@ -149,13 +151,8 @@ void	Game::update(void)
 {
 	float elapsed = _clock.getElapsedTime();
 
-	if (elapsed > _speed) {
+	if (elapsed > (_speed - _speedFactor * SPEED_PER_LVL)) {
 		_snake->move();
-		// if (_snake->checkCollision(_gameWidth - TILE_SIZE, _gameHeight - TILE_SIZE))
-		// {
-		// 	_state = State::OFF;
-		// 	// _showMenu();
-		// }
 		if (_snake->checkCollision())
 		{
 			_state = State::OFF;
@@ -167,6 +164,8 @@ void	Game::update(void)
 		{
 			_snake->eatFruit();
 			_score += 100;
+			if (!(_score % 500))
+				_speedFactor++;
 			_fruit->popRandom(_snake->getCoords());
 		}
 		_clock.reset();

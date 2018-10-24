@@ -1,9 +1,10 @@
 #ifndef MYSFML_HPP
 # define MYSFML_HPP
 
-#include <iostream>
-#include <SFML/Graphics.hpp>
-#include "IMyLib.hpp"
+# include <iostream>
+# include <SFML/Graphics.hpp>
+# include "IMyLib.hpp"
+# include <sstream>
 
 class MySFML: public IMyLib
 {
@@ -20,6 +21,8 @@ private:
 	sf::Texture	_snakeTexture;
 	sf::Texture	_fruitTexture;
 
+	sf::Font	_font;
+	sf::Text	_hud;
 	const int	_tileSize;
 
 	MySFML(void);
@@ -33,6 +36,7 @@ public:
 	void	drawBackground(const std::vector<std::pair<int, int>> &coords, int widthLimit, int heightLimit);
 	void	drawSnake(const std::vector<std::pair<int, int>> &coords, int direction);
 	void	drawFruit(const std::vector<std::pair<int, int>> &coords);
+	void	drawHud(int score, int nbFruits, int lvl);
 
 	void	clearScreen(void);
 	void	displayScreen(void);
