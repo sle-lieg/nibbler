@@ -10,7 +10,6 @@ private:
 	Direction			_newDirection;
 	bool				_hasEaten;
 	std::pair<int, int> _newTail;
-	int					_nbFruitEaten;
 
 	Snake();
 	Snake(const Snake &);

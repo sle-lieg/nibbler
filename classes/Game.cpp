@@ -2,7 +2,7 @@
 #include <sstream>
 
 Game::Game(int ac, char **av) :
-	_state{State::PAUSE}, _clock{}, _speed{Difficulty::HARD}, _speedFactor{1},
+	_state{State::PAUSE}, _clock{}, _speed{Difficulty::MEDIUM}, _speedFactor{1},
 	_score{0}
 {
 	std::cout << "Game initialized." << std::endl;
@@ -131,7 +131,7 @@ void	Game::drawGame(void) const
 	_dylib->drawBackground(_gameGrid->getCoords(), g_gameWidth - TILE_SIZE, g_gameHeight - TILE_SIZE);
 	_dylib->drawSnake(_snake->getCoords(), _snake->getCurrentDirection());
 	_dylib->drawFruit(_fruit->getCoords());
-	_dylib->drawHud(_score, _snake->getNbFruitEaten(), _speedFactor);
+	_dylib->drawHud(_score, _speedFactor);
 	_dylib->displayScreen();
 }
 

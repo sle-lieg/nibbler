@@ -1,7 +1,7 @@
 #include "Snake.hpp"
 
 Snake::Snake(int snakeHeadX, int snakeHeadY) :
-	_currentDirection{Direction::LEFT}, _newDirection{Direction::LEFT}, _nbFruitEaten{0}
+	_currentDirection{Direction::LEFT}, _newDirection{Direction::LEFT}
 {
 	for (int i = 0; i < 4; i++)
 		_coords.push_back(std::make_pair(snakeHeadX + TILE_SIZE * i, snakeHeadY));
@@ -18,12 +18,6 @@ int		Snake::getNewDirection(void) const
 {
 	return static_cast<int>(_newDirection);
 }
-
-int		Snake::getNbFruitEaten(void) const
-{
-	return _nbFruitEaten;
-}
-
 
 void	Snake::setCurrentDirection(int dir)
 {
@@ -89,7 +83,6 @@ bool	Snake::checkCollision(const std::pair<int, int> &fruit) const
 void	Snake::eatFruit(void)
 {
 	_hasEaten = true;
-	_nbFruitEaten++;
 	_newTail = _coords.back();
 }
 

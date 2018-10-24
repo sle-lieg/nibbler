@@ -5,6 +5,7 @@
 # include <SFML/Graphics.hpp>
 # include "IMyLib.hpp"
 # include <sstream>
+# include <iomanip>
 
 class MySFML: public IMyLib
 {
@@ -15,11 +16,13 @@ private:
 	sf::Sprite	_wallSprite;
 	sf::Sprite	_snakeSprite;
 	sf::Sprite	_fruitSprite;
+	sf::Sprite	_hudSprite;
 
 	sf::Texture	_fieldTexture;
 	sf::Texture	_wallTexture;
 	sf::Texture	_snakeTexture;
 	sf::Texture	_fruitTexture;
+	sf::Texture _hudTexture;
 
 	sf::Font	_font;
 	sf::Text	_hud;
@@ -36,7 +39,7 @@ public:
 	void	drawBackground(const std::vector<std::pair<int, int>> &coords, int widthLimit, int heightLimit);
 	void	drawSnake(const std::vector<std::pair<int, int>> &coords, int direction);
 	void	drawFruit(const std::vector<std::pair<int, int>> &coords);
-	void	drawHud(int score, int nbFruits, int lvl);
+	void	drawHud(int score, int lvl);
 
 	void	clearScreen(void);
 	void	displayScreen(void);

@@ -28,7 +28,7 @@ enum class Direction {
 };
 
 namespace Difficulty {
-	static const float EASY = 0.5f;
+	static const float EASY = 1.0f;
 	static const float MEDIUM = 0.5f;
 	static const float HARD = 0.3f;
 }

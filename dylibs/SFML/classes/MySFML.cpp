@@ -7,25 +7,28 @@ MySFML::MySFML(int width, int height, int tileSize) :
 	
 	_fieldTexture.loadFromFile("dylibs/textures/myTileSet.png", sf::IntRect(tileSize * 3, 0, tileSize, tileSize));
 	_wallTexture.loadFromFile("dylibs/textures/myTileSet.png", sf::IntRect(tileSize * 2, 0, tileSize, tileSize));
-	_snakeTexture.loadFromFile("dylibs/textures/snake.png");
-	_fruitTexture.loadFromFile("dylibs/textures/myTileSet.png", sf::IntRect(0, tileSize, tileSize, tileSize));
+	_snakeTexture.loadFromFile("dylibs/textures/snake2.png");
+	_fruitTexture.loadFromFile("dylibs/textures/myTileSet2.png", sf::IntRect(0, tileSize, tileSize, tileSize));
+	_hudTexture.loadFromFile("dylibs/textures/hud.png");
 
 	_fieldSprite.setTexture(_fieldTexture);
 	_wallSprite.setTexture(_wallTexture);
 	_snakeSprite.setTexture(_snakeTexture);
 	_fruitSprite.setTexture(_fruitTexture);
+	_hudSprite.setTexture(_hudTexture);
 
-	if (!(_font.loadFromFile("/System/Library/Fonts/Courier.dfont")))
+	// if (!(_font.loadFromFile("/System/Library/Fonts/Courier.dfont")))
+	// if (!(_font.loadFromFile("/System/Library/Fonts/AquaKana.ttc")))
+	if (!(_font.loadFromFile("dylibs/textures/angrybirds-regular.ttf")))
 	{
 		std::cout << "Error: wrong font path" << std::endl;
 		exit(EXIT_FAILURE);
 	}
 	_hud.setFont(_font);
-	_hud.setCharacterSize(24);
-	_hud.setOutlineColor(sf::Color::Red);
-	_hud.setStyle(sf::Text::Bold | sf::Text::Underlined);
-	_hud.setPosition(0.0f, 0.0f);
-	_hud.setFillColor(sf::Color::White);
+	_hud.setCharacterSize(18);
+	// _hud.setStyle(sf::Text::Bold);
+	_hud.setPosition(_tileSize, 5.0f);
+	_hud.setFillColor(sf::Color::Green);
 }
 
 MySFML::~MySFML(void) {}
@@ -72,17 +75,46 @@ Inputs	MySFML::getInput(void) {
 void	MySFML::drawBackground(const std::vector<std::pair<int, int>> &coords, int widthLimit, int heightLimit)
 {
 	for (auto tile: coords) {
-		if (tile.first == 0 || tile.first == widthLimit
-		|| tile.second == 32 || tile.second == heightLimit) {
-			_wallSprite.setPosition(tile.first, tile.second);
-			_window.draw(_wallSprite);
+		if (tile.second == 0)
+		{
+			if (tile.first == 0)
+				_hudSprite.setTextureRect(sf::IntRect(0, 0, _tileSize, _tileSize));
+			else if (tile.first == widthLimit)
+				_hudSprite.setTextureRect(sf::IntRect(_tileSize * 2, 0, _tileSize, _tileSize));
+			else
+				_hudSprite.setTextureRect(sf::IntRect(_tileSize, 0, _tileSize, _tileSize));
+			_hudSprite.setPosition(tile.first, tile.second);
+			_window.draw(_hudSprite);
 		}
-		else {
-			_fieldSprite.setPosition(tile.first, tile.second);
-			_window.draw(_fieldSprite);
+		else
+		{
+			if (tile.first == 0 || tile.first == widthLimit
+			|| tile.second == 32 || tile.second == heightLimit) {
+				_wallSprite.setPosition(tile.first, tile.second);
+				_window.draw(_wallSprite);
+			}
+			else {
+				_fieldSprite.setPosition(tile.first, tile.second);
+				_window.draw(_fieldSprite);
+			}
 		}
 	}
 }
+
+// void	MySFML::drawBackground(const std::vector<std::pair<int, int>> &coords, int widthLimit, int heightLimit)
+// {
+// 	for (auto tile: coords) {
+// 		if (tile.first == 0 || tile.first == widthLimit
+// 		|| tile.second == 32 || tile.second == heightLimit) {
+// 			_wallSprite.setPosition(tile.first, tile.second);
+// 			_window.draw(_wallSprite);
+// 		}
+// 		else {
+// 			_fieldSprite.setPosition(tile.first, tile.second);
+// 			_window.draw(_fieldSprite);
+// 		}
+// 	}
+// }
 
 void	MySFML::drawSnake(const std::vector<std::pair<int, int> > &coords, int direction)
 {
@@ -106,12 +138,11 @@ void	MySFML::drawFruit(const std::vector<std::pair<int, int>> &coords)
 	}
 }
 
-void	MySFML::drawHud(int score, int nbFruits, int lvl)
+void	MySFML::drawHud(int score, int lvl)
 {
 	std::stringstream ss;
-	ss << "Score: " << score << " Fruits: " << nbFruits << " Level: " << lvl;
+	ss << "Score: " << std::setw(7) << std::setfill('0') << score << "	Level: " << lvl;
 
-	// _hud.setString(L"Hello");
 	_hud.setString(ss.str());
 	_window.draw(_hud);
 }
